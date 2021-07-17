@@ -1,6 +1,9 @@
 main {
   height: 100vh;
 }
+h3 {
+  padding: 1rem 0;
+}
 
 .footer-icon {
   padding: 5px;
@@ -12,4 +15,13 @@ main {
   height: 50px;
   border: solid 2px #fff;
   border-radius: 50%;
+}
+
+.card-name-link {
+  color: #7D7D7D;
+  text-decoration: none;
+}
+
+.rating span {
+  margin: 0.1rem;
 }
