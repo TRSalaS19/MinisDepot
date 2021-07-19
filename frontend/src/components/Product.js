@@ -8,7 +8,7 @@ const Product = ({product}) => {
   const imgTwo = product.images.imgTwo;
 
   return (
-    <Card className='my-3 p-3 rounded'>
+    <Card className='my-3 p-3 rounded' fluid>
         <Carousel hover='true' interval={5000} >
           <Carousel.Item >
             <Link to={`/product/${product._id}`}>
@@ -33,9 +33,9 @@ const Product = ({product}) => {
         </Carousel>
       <Card.Body>
           <Card.Title as='div'>
-          <a className='card-name-link' href={`/product/${product._id}`}>
+          <Link className='card-name-link' to={`/product/${product._id}`}>
             <strong>{product.name}</strong>
-          </a>
+          </Link>
           </Card.Title>
         <Card.Text as='div'>
           <Rating 
@@ -52,7 +52,7 @@ const Product = ({product}) => {
 }
 
 Rating.defaultProps = {
-  color: '#6DBAA3',
+  color: '#ffce67',
 }
 
 export default Product

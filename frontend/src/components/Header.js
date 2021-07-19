@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <header>
       <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
-        <Container>
+        <Container fluid>
           <LinkContainer to='/'>
             <Navbar.Brand>
               <img className='headerLogo mx-2' src={headerImg} alt='mini' />

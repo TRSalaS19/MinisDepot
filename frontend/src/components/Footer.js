@@ -6,7 +6,7 @@ const Footer = () => {
     <footer>
       <Container>
         <Row>
-          <Col className='text-center py-3'>
+          <Col className='text-center p-3'>
             <p>Copyright &copy; {new Date().getFullYear()} Mini's Depot</p>
             <a className='footer-icon' href='https://www.Facebook.com'> <i className="fab fa-facebook"> </i></a>
             <a className='footer-icon' href='https://www.Twitter.com'> <i className="fab fa-twitter"> </i></a>
