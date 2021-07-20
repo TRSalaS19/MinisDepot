@@ -1,18 +1,22 @@
-import React from 'react';
-import { Link} from 'react-router-dom';
-import { 
-  Row, 
-  Col, 
-  ListGroup, 
-  Card, 
-  Button, 
-  Carousel
-} from 'react-bootstrap';
-import Rating from '../components/Rating';
-import products from '../products';
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Row, Col, ListGroup, Card, Button, Image} from 'react-bootstrap'
+import Rating from '../components/Rating'
+import axios from 'axios'
 
-const ProductPage = ({match}) => {
-  const product = products.find((p) => p._id === match.params.id)
+const ProductPage = ({ match }) => {
+  const [product, setProduct] = useState({})
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/db/products/${match.params.id}`)
+
+      setProduct(data)
+    }
+
+    fetchProduct()
+  }, [match])
+
   return (
     <>
       <Link className='btn btn-warning my-3' to='/'>
@@ -20,29 +24,12 @@ const ProductPage = ({match}) => {
       </Link>
       <Row>
         <Col md={5}>
-          <Carousel variant="dark">
-            <Carousel.Item>
-              <img
-                className="w-100 rounded"
-                src={product.images.imgOne}
-                alt={product.name}
-                style={{height:"400px"}}
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="w-100 rounded"
-                src={product.images.imgTwo}
-                alt={product.name}
-                style={{height:"400px"}}
-              />
-            </Carousel.Item>
-          </Carousel>
+          <Image src={product.image} alt={product.name} fluid rounded/>
         </Col>
         <Col md={4}>
-          <ListGroup variant='flush'>
+          <ListGroup >
             <ListGroup.Item>
-              <h3>{product.name.toUpperCase()}</h3>
+              <h3>{product.name}</h3>
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating 
@@ -60,7 +47,7 @@ const ProductPage = ({match}) => {
         </Col>
         <Col md={3}>
           <Card>
-            <ListGroup variant='flush'>
+            <ListGroup>
               <ListGroup.Item>
                 <Row>
                   <Col>
@@ -82,7 +69,11 @@ const ProductPage = ({match}) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Button className='btn-block' type='button' rounded disabled={product.countInStock === 0}>
+              <Button
+                  className='btn-block addToCartBtn'
+                  type='button'
+                  disabled={product.countInStock === 0}
+                >
                   Add To Cart
                 </Button>
               </ListGroup.Item>

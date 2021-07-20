@@ -26,3 +26,7 @@ h3 {
 .rating span {
   margin: 0.1rem;
 }
+
+.addToCartBtn {
+  margin-left: 70px;
+}

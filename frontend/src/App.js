@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Header />
         <main>
-          <Container className='py-1'>
+          <Container>
             <Route exact path='/' component={HomePage} />
             <Route path='/product/:id' component={ProductPage} />
           </Container>

@@ -17,7 +17,6 @@ app.get('/db/products/:id', (req, res) => {
   res.json(product)
 })
 
-
 app.listen(PORT, () => {
   console.log(`Server is runnig on port: ${PORT}`);
 })
