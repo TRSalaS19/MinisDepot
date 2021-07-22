@@ -1,6 +1,15 @@
-const express = require('express');
-const products = require('./productsData/products');
-const PORT = 5000; 
+import express from 'express';
+import dotenv from 'dotenv';
+import connectDB from './dbConfigs/databaseConfig.js';
+import colors from 'colors';
+import {notFound , errorHandler} from './middleware/errorMiddleware.js';
+import productRoutes from './routes/productRoutes.js';
+
+const PORT = process.env.PORT || 5000; 
+
+dotenv.config();
+
+connectDB();
 
 const app = express(); 
 
@@ -8,15 +17,12 @@ app.get('/', (req, res) => {
   res.send(`DB connection is up and running on port ${PORT}`)
 })
 
-app.get('/db/products', (req, res) => {
-  res.json(products)
-})
+app.use('/db/products', productRoutes)
 
-app.get('/db/products/:id', (req, res) => {
-  const product = products.find((p) => p._id === req.params.id)
-  res.json(product)
-})
+app.use(notFound);
+app.use(errorHandler);
+
 
 app.listen(PORT, () => {
-  console.log(`Server is runnig on port: ${PORT}`);
+  console.log(`Server is runnig on port: ${PORT} under ${process.env.NODE_ENV} mode`.brightBlue);
 })

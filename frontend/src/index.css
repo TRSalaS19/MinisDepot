@@ -1,16 +1,22 @@
 main {
   height: 100vh;
 }
+h1 {
+  color: #7D7D7D;
+}
 
 h3 {
   padding: 0.5rem 0;
 }
+
+/* footer styles */
 
 .footer-icon {
   padding: 5px;
   text-decoration: none;
 }
 
+/* header styles */
 .headerLogo {
   width: 50px;
   height: 50px;
@@ -18,6 +24,7 @@ h3 {
   border-radius: 50%;
 }
 
+/* homePage syles */
 .card-name-link {
   color: #7D7D7D;
   text-decoration: none;
@@ -27,6 +34,16 @@ h3 {
   margin: 0.1rem;
 }
 
+/* product page styles */
 .addToCartBtn {
   margin-left: 70px;
+}
+
+/* spinner style */
+.spinner {
+  width: 100px;
+  height: 100px;
+  margin: auto; 
+  margin-top: 100px; 
+  display: block
 }
