@@ -2,7 +2,13 @@ main {
   height: 100vh;
 }
 h1 {
+  padding: 1rem;
   color: #7D7D7D;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
 }
 
 h3 {
@@ -36,7 +42,7 @@ h3 {
 
 /* product page styles */
 .addToCartBtn {
-  margin-left: 70px;
+  margin-left: 50px;
 }
 
 /* spinner style */
@@ -47,3 +53,5 @@ h3 {
   margin-top: 100px; 
   display: block
 }
+
+/* cart Page styles */

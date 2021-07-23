@@ -10,7 +10,7 @@ import Alerts from '../components/Alerts';
 
 const ProductPage = ({ match, history }) => {
 
-  const [itemQty, setItemQty] = useState(0)
+  const [itemQty, setItemQty] = useState(1)
 
   const dispatch = useDispatch()
 
@@ -56,7 +56,7 @@ const ProductPage = ({ match, history }) => {
             </ListGroup>
           </Col>
           <Col md={3}>
-            <Card>
+            <Card className='bg-primary p-1'>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <Row>

@@ -1,4 +1,4 @@
-import {ADD_ITEM_TO_CART} from '../const/cartConst';
+import {ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART} from '../const/cartConst';
 
 export const cartReducer = (state = {cartItems: [] }, action) => {
   switch(action.type) {
@@ -6,10 +6,11 @@ export const cartReducer = (state = {cartItems: [] }, action) => {
 
       const item = action.payload
 
+      // checks to see if item exists in cartItems if it does it saves it to this value
       const itemExists = state.cartItems.find(itm => itm.product === item.product)
 
       if(itemExists) {
-        // if items exists we are iterating throught cartItems and for every item if the product(id) is the same as itemsExists 
+        // if item exists we are iterating through cartItems and comparing itemExists id to the each item in the cartsItems array and returning state else if item does not exist then we are adding the item to cartitems.  
         return {
           ...state,
           cartItems: state.cartItems.map(i => i.product === itemExists.product ? item: i)
@@ -20,7 +21,11 @@ export const cartReducer = (state = {cartItems: [] }, action) => {
           cartItems: [...state.cartItems, item]
         }
       }
-
+    case REMOVE_ITEM_FROM_CART: 
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((item) => item.product !== action.payload)
+      }
     default: 
       return state
   }
