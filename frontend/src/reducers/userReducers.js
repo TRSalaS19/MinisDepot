@@ -1,20 +1,36 @@
 import { 
-  USER_LOGIN_FAIL, 
-  USER_LOGIN_REQUEST, 
-  USER_LOGIN_SUCCESS, 
-  USER_LOGOUT
+  LOGIN_FAIL, 
+  LOGIN_REQUEST, 
+  LOGIN_SUCCESS, 
+  LOGOUT,
+  REGISTER_FAIL,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS
 } from "../const/userConst"
   
 export const loginReducer = (state = {}, action) => {
   switch (action.type) {
-    case USER_LOGIN_REQUEST:
+    case LOGIN_REQUEST:
       return {loading:true}
-    case USER_LOGIN_SUCCESS:
+    case LOGIN_SUCCESS:
       return {loading:false, userInfo: action.payload}
-    case USER_LOGIN_FAIL:
+    case LOGIN_FAIL:
       return {loading:false, error: action.payload}
-    case USER_LOGOUT: 
+    case LOGOUT: 
       return {}
+    default: 
+      return state
+  }
+}
+
+export const registerReducer = (state = {}, action) => {
+  switch (action.type) {
+    case REGISTER_REQUEST:
+      return {loading:true}
+    case REGISTER_SUCCESS:
+      return {loading:false, userInfo: action.payload}
+    case REGISTER_FAIL:
+      return {loading:false, error: action.payload}
     default: 
       return state
   }
