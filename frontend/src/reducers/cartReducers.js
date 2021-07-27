@@ -9,8 +9,8 @@ export const cartReducer = (state = {cartItems: [] }, action) => {
       // checks to see if item exists in cartItems if it does it saves it to this value
       const itemExists = state.cartItems.find(itm => itm.product === item.product)
 
+      // if item exists we are iterating through cartItems and comparing itemExists id to the each item in the cartsItems array and returning state if it does exsist else if item does not exist then we are adding the item to cartitems.  
       if(itemExists) {
-        // if item exists we are iterating through cartItems and comparing itemExists id to the each item in the cartsItems array and returning state else if item does not exist then we are adding the item to cartitems.  
         return {
           ...state,
           cartItems: state.cartItems.map(i => i.product === itemExists.product ? item: i)

@@ -39,13 +39,13 @@ const CartPage = ({match, location, history}) => {
           ) : (
             <ListGroup variant='flush'>
               {cartItems.map(item => (
-                <ListGroup.Item key={item.product}>
+                <ListGroup.Item key={item.product} className='bg-primary text-white rounded'>
                   <Row>
                     <Col md={2}>
-                      <Image src={item.image}  alt={item.name} fluid rounded/>
+                      <Image className='cart-image' src={item.image}  alt={item.name} fluid rounded />
                     </Col>
                     <Col md={3}>
-                      <Link className='text-decoration-none' to={`/product/${item.product}`}>
+                      <Link className='text-decoration-none text-white' to={`/product/${item.product}`}>
                         {item.name}
                       </Link>
                     </Col>
@@ -81,7 +81,7 @@ const CartPage = ({match, location, history}) => {
           )}
         </Col>
         <Col md={4}>
-           <Card className='my-4 bg-primary p-1'>
+           <Card className='my-4 bg-primary p-2'>
              <ListGroup variant='flush'>
                <ListGroup.Item >
                  <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.itemQty, 0)}) items</h2>
