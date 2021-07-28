@@ -1,8 +1,18 @@
+// Login const
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
-
+// register for a new account const
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
+// get profile details const
+export const PROFILE_DETAILS_REQUEST = 'PROFILE_DETAILS_REQUEST';
+export const PROFILE_DETAILS_SUCCESS = 'PROFILE_DETAILS_SUCCESS';
+export const PROFILE_DETAILS_FAIL = 'PROFILE_DETAILS_FAIL';
+// update profile const
+export const PROFILE_UPDATE_REQUEST = 'PROFILE_UPDATE_REQUEST';
+export const PROFILE_UPDATE_SUCCESS = 'PROFILE_UPDATE_SUCCESS';
+export const PROFILE_UPDATE_FAIL = 'PROFILE_UPDATE_FAIL';
+export const PROFILE_UPDATE_RESET = 'PROFILE_UPDATE_RESET';

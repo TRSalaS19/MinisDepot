@@ -50,6 +50,37 @@ const userProfile = asyncHandler(async(req, res) => {
   }
 })
 
+// Update user profile
+// PUT/db/users/profile route
+// private
+
+const updateProfile = asyncHandler(async(req, res) => {
+  // if user is authenticated and authorized with jwt token. the route will return selected user info. 
+
+  const user = await User.findById(req.user._id)
+
+  if(user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    if(req.body.password) {
+      user.password = req.body.password
+    }
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: tokenGenerate(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+})
+
 // register new user
 // Post/db/users
 // public
@@ -90,5 +121,6 @@ const userRegister = asyncHandler(async(req, res) => {
 export {
   userAuth,
   userProfile,
-  userRegister
+  userRegister,
+  updateProfile
 }
