@@ -26,7 +26,7 @@ const ShippingPage = ({history}) => {
   return (
     <FormFields>
       <CheckoutProg step1 step2/>
-      <ProgressBar variant='secondary' animated now={50} />
+      <ProgressBar variant='danger' animated now={50} />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
 
@@ -77,7 +77,7 @@ const ShippingPage = ({history}) => {
         </Form.Group>
 
         <Button type='submit' variant='primary' className='my-3'>
-          Use This Address
+          Continue
         </Button>
 
       </Form>

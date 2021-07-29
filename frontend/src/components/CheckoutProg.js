@@ -1,6 +1,6 @@
 import React from 'react';
 import {Nav} from 'react-bootstrap';
-import {LinkContainer, linkContainer} from 'react-router-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
 
 const CheckoutProg = ({step1, step2, step3, step4}) => {
   return (

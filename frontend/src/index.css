@@ -59,3 +59,14 @@ h3 {
   height: 50px; 
   width: 50px;
 }
+
+/* Payment Page styles */
+.paymentOption {
+  margin: 5px;
+}
+
+/* Confirm Order page styles */
+.confirm-order-button {
+  margin-left: 75px;
+}
+
