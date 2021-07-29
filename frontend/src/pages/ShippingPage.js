@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
-import { Form, Button} from 'react-bootstrap';
+import { Form, Button, ProgressBar} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import FormFields from '../components/FormFields';
+import CheckoutProg from '../components/CheckoutProg';
 import {saveAddress} from '../actions/cartActions';
 
 const ShippingPage = ({history}) => {
@@ -24,7 +25,9 @@ const ShippingPage = ({history}) => {
 
   return (
     <FormFields>
-      <h1>Shipping Address</h1>
+      <CheckoutProg step1 step2/>
+      <ProgressBar variant='secondary' animated now={50} />
+      <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
 
         <Form.Group controlId='street'>
@@ -74,7 +77,7 @@ const ShippingPage = ({history}) => {
         </Form.Group>
 
         <Button type='submit' variant='primary' className='my-3'>
-          Save Address
+          Use This Address
         </Button>
 
       </Form>

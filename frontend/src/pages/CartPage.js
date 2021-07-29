@@ -88,7 +88,7 @@ const CartPage = ({match, location, history}) => {
                  ${cartItems.reduce((acc, item) => acc + item.itemQty * item.price, 0).toFixed(2)}
                </ListGroup.Item>
                <ListGroup.Item>
-                 <Button type='button' variant="warning" disabled={cartItems.length === 0} onClick={checkoutHandler}>Checkout</Button>
+                 <Button type='button' variant='danger' disabled={cartItems.length === 0} onClick={checkoutHandler}>Checkout</Button>
                </ListGroup.Item>
              </ListGroup>
            </Card>                      
