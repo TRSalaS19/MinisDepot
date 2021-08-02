@@ -26,8 +26,8 @@ const PaymentPage = ({history}) => {
   return (
     <FormFields>
       <CheckoutProg step1 step2 step3/>
-      <ProgressBar variant='danger' animated now={75} />
-      <h1>Payment</h1>
+      <ProgressBar variant='danger' animated now={75}/>
+      <h1>Payment Option</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label as='legend'>Select Payment Type</Form.Label>

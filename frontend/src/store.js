@@ -1,10 +1,27 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { 
+  createStore, 
+  combineReducers, 
+  applyMiddleware 
+} from 'redux'
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import { productsListReducer, productInfoReducer } from './reducers/productReducers';
+import { 
+  productsListReducer, 
+  productInfoReducer 
+} from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
-import {loginReducer, registerReducer, profileDetailsReducer, profileUpdateReducer} from './reducers/userReducers';
-import {createOrderReducer} from './reducers/orderReducers';
+import {
+  loginReducer, 
+  registerReducer, 
+  profileDetailsReducer, 
+  profileUpdateReducer
+} from './reducers/userReducers';
+import {
+  createOrderReducer, 
+  orderDetailsReducer, 
+  orderPaymentUpdateReducer,
+  getUserOrdersReducer
+} from './reducers/orderReducers';
 
 
 const reducer = combineReducers({
@@ -15,7 +32,10 @@ const reducer = combineReducers({
   register: registerReducer,
   profileDetails: profileDetailsReducer,
   updateProfile: profileUpdateReducer,
-  orderCreate: createOrderReducer
+  orderCreate: createOrderReducer,
+  orderDetails: orderDetailsReducer,
+  orderPaid: orderPaymentUpdateReducer,
+  userOrderList: getUserOrdersReducer
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []

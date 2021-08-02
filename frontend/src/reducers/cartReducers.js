@@ -2,7 +2,8 @@ import {
   ADD_ITEM_TO_CART, 
   REMOVE_ITEM_FROM_CART, 
   SAVE_ADDRESS, 
-  PAYMENT_OPTION
+  PAYMENT_OPTION,
+  // CART_LIST_RESET
 } from '../const/cartConst';
 
 export const cartReducer = (state = {cartItems: [], shippingAddress: {} }, action) => {
@@ -35,6 +36,8 @@ export const cartReducer = (state = {cartItems: [], shippingAddress: {} }, actio
       return {...state, shippingAddress: action.payload}
     case PAYMENT_OPTION: 
       return {...state, paymentOption: action.payload}
+    // case CART_LIST_RESET: 
+    //   return {cartItems: [], shippingAddress: {}}
     default: 
       return state
   }

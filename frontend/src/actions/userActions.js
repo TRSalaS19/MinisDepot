@@ -10,10 +10,13 @@ import {
   PROFILE_DETAILS_REQUEST,
   PROFILE_DETAILS_SUCCESS,
   PROFILE_DETAILS_FAIL,
+  PROFILE_DETAILS_RESET,
   PROFILE_UPDATE_REQUEST,
   PROFILE_UPDATE_SUCCESS,
-  PROFILE_UPDATE_FAIL
+  PROFILE_UPDATE_FAIL,
 } from '../const/userConst';
+import {GET_USER_ORDERS_RESET} from '../const/orderConst';
+// import {CART_LIST_RESET} from '../const/cartConst';
 
 export const login = (email, password) => async(dispatch) => {
   try {
@@ -51,6 +54,9 @@ export const login = (email, password) => async(dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
   dispatch({ type: LOGOUT})
+  dispatch({ type: GET_USER_ORDERS_RESET})
+  dispatch({ type: PROFILE_DETAILS_RESET})
+  // dispatch({ type: CART_LIST_RESET})
 }
 
 

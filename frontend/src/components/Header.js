@@ -7,7 +7,7 @@ import { logout } from '../actions/userActions';
 
 
 
-const Header = ({history}) => {
+const Header = () => {
   const dispatch = useDispatch();
   
   const userDetails = useSelector(state => state.login);

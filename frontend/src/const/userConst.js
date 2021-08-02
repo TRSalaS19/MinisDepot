@@ -7,11 +7,12 @@ export const LOGOUT = 'LOGOUT';
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
-// get profile details const
+// get user profile details const
 export const PROFILE_DETAILS_REQUEST = 'PROFILE_DETAILS_REQUEST';
 export const PROFILE_DETAILS_SUCCESS = 'PROFILE_DETAILS_SUCCESS';
 export const PROFILE_DETAILS_FAIL = 'PROFILE_DETAILS_FAIL';
-// update profile const
+export const PROFILE_DETAILS_RESET = 'PROFILE_DETAILS_RESET';
+// update user profile const
 export const PROFILE_UPDATE_REQUEST = 'PROFILE_UPDATE_REQUEST';
 export const PROFILE_UPDATE_SUCCESS = 'PROFILE_UPDATE_SUCCESS';
 export const PROFILE_UPDATE_FAIL = 'PROFILE_UPDATE_FAIL';
