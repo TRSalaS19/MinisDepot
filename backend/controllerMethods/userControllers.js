@@ -117,10 +117,43 @@ const userRegister = asyncHandler(async(req, res) => {
     }
   })
 
+// admin access controllers: 
+
+// GET list of all users for admin user list
+// GET/db/users route
+// private/admin
+
+const getAdminUserList = asyncHandler(async(req, res) => {
+
+  const users = await User.find({});
+
+  res.json(users);
+})
+
+// Delete a user
+// DELETE/db/users/:id 
+// private/admin
+
+const adminDeleteUser = asyncHandler(async(req, res) => {
+
+  const user = await User.findById(req.params.id);
+
+  if(user) {
+    await user.remove()
+    res.json({message: `Account: ${req.params.id} was removed`})
+  } else {
+    res.status(404)
+    throw new Error('User was not found')
+  }
+
+  res.json(users);
+})
 
 export {
   userAuth,
   userProfile,
   userRegister,
-  updateProfile
+  updateProfile,
+  getAdminUserList, 
+  adminDeleteUser
 }

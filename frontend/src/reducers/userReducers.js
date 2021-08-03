@@ -13,6 +13,13 @@ import {
   PROFILE_UPDATE_SUCCESS,
   PROFILE_UPDATE_FAIL,
   PROFILE_UPDATE_RESET,
+  ADMIN_USER_LIST_REQUEST,
+  ADMIN_USER_LIST_SUCCESS,
+  ADMIN_USER_LIST_FAIL,
+  ADMIN_USER_LIST_RESET,
+  ADMIN_DELETE_USER_REQUEST,
+  ADMIN_DELETE_USER_SUCCESS,
+  ADMIN_DELETE_USER_FAIL,
 } from "../const/userConst"
   
 export const loginReducer = (state = {}, action) => {
@@ -65,6 +72,34 @@ export const profileUpdateReducer = (state = { }, action) => {
     case PROFILE_UPDATE_SUCCESS:
       return {loading:false,success: true, userInfo: action.payload }
     case PROFILE_UPDATE_FAIL:
+      return {loading:false, error: action.payload}
+    default: 
+      return state
+  }
+}
+
+export const adminUserListReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case ADMIN_USER_LIST_REQUEST:
+      return {loading:true}
+    case ADMIN_USER_LIST_SUCCESS:
+      return {loading:false, users: action.payload }
+    case ADMIN_USER_LIST_FAIL:
+      return {loading:false, error: action.payload}
+    case ADMIN_USER_LIST_RESET:
+      return { users: []}
+    default: 
+      return state
+  }
+}
+
+export const adminDeleteUserReducer = (state = { }, action) => {
+  switch (action.type) {
+    case ADMIN_DELETE_USER_REQUEST:
+      return {loading:true}
+    case ADMIN_DELETE_USER_SUCCESS:
+      return {loading:false, deleteSuccess: true }
+    case ADMIN_DELETE_USER_FAIL:
       return {loading:false, error: action.payload}
     default: 
       return state

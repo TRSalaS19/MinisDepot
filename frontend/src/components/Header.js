@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg='primary' variant='dark' collapseOnSelect>
+      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
         <Container fluid>
           <LinkContainer to='/'>
             <Navbar.Brand>
@@ -34,17 +34,30 @@ const Header = () => {
                 <Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name.toUpperCase()} id='username' className='mx-4' >
+                <NavDropdown title={userInfo.name.toUpperCase()} id='username' className='mx-5' >
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                 </NavDropdown>
-              ) : 
+              ) : (
               <LinkContainer to='/login'>
                 <Nav.Link><i className="fas fa-user"></i> Login</Nav.Link>
               </LinkContainer>              
-              }
+              )}
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title='Admin Menu' id='adminMenu' className='mx-5' >
+                  <LinkContainer to='/aa/userlist'>
+                    <NavDropdown.Item>Admin User Menu</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/aa/productlist'>
+                    <NavDropdown.Item>Admin Product Menu</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/aa/orderlist'>
+                    <NavDropdown.Item>Admin Order Menu</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -14,6 +14,13 @@ import {
   PROFILE_UPDATE_REQUEST,
   PROFILE_UPDATE_SUCCESS,
   PROFILE_UPDATE_FAIL,
+  ADMIN_USER_LIST_REQUEST,
+  ADMIN_USER_LIST_SUCCESS,
+  ADMIN_USER_LIST_FAIL,
+  ADMIN_USER_LIST_RESET,
+  ADMIN_DELETE_USER_REQUEST,
+  ADMIN_DELETE_USER_SUCCESS,
+  ADMIN_DELETE_USER_FAIL
 } from '../const/userConst';
 import {GET_USER_ORDERS_RESET} from '../const/orderConst';
 // import {CART_LIST_RESET} from '../const/cartConst';
@@ -56,6 +63,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT})
   dispatch({ type: GET_USER_ORDERS_RESET})
   dispatch({ type: PROFILE_DETAILS_RESET})
+  dispatch({ type: ADMIN_USER_LIST_RESET})
   // dispatch({ type: CART_LIST_RESET})
 }
 
@@ -158,6 +166,69 @@ export const profileUpdate = (user) => async(dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PROFILE_UPDATE_FAIL,
+      payload: 
+        error.response && error.response.data.message 
+        ? error.response.data.message
+        : error.message
+    })
+  }
+}
+
+export const adminUserList = () => async(dispatch, getState) => {
+  try {
+    dispatch({
+      type: ADMIN_USER_LIST_REQUEST
+    })
+
+    const {login: {userInfo}} = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+
+    const { data } = await axios.get(`/db/users/`, config)
+  
+    dispatch({
+      type: ADMIN_USER_LIST_SUCCESS,
+      payload: data
+    })    
+
+  } catch (error) {
+    dispatch({
+      type: ADMIN_USER_LIST_FAIL,
+      payload: 
+        error.response && error.response.data.message 
+        ? error.response.data.message
+        : error.message
+    })
+  }
+}
+
+export const adminDeleteUser = (id) => async(dispatch, getState) => {
+  try {
+    dispatch({
+      type: ADMIN_DELETE_USER_REQUEST
+    })
+
+    const {login: {userInfo}} = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+
+    await axios.delete(`/db/users/${id}`, config)
+  
+    dispatch({
+      type: ADMIN_DELETE_USER_SUCCESS
+    })    
+
+  } catch (error) {
+    dispatch({
+      type: ADMIN_DELETE_USER_FAIL,
       payload: 
         error.response && error.response.data.message 
         ? error.response.data.message
