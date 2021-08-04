@@ -4,7 +4,10 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_INFO_REQUEST,
   PRODUCT_INFO_SUCCESS,
-  PRODUCT_INFO_FAIL
+  PRODUCT_INFO_FAIL,
+  ADMIN_DELETE_PRODUCT_REQUEST,
+  ADMIN_DELETE_PRODUCT_SUCCESS,
+  ADMIN_DELETE_PRODUCT_FAIL,
 } from '../const/productConst';
 
 export const productsListReducer = (state = { products: []}, action) => {
@@ -28,6 +31,19 @@ export const productInfoReducer = (state = { product: {reviews: []} }, action) =
       return {loading: false, product: action.payload}
     case PRODUCT_INFO_FAIL: 
       return {loading: false, error: action.payload}
+    default: 
+      return state
+  }
+}
+
+export const adminDeleteProductReducer = (state = {}, action) => {
+  switch(action.type) {
+    case ADMIN_DELETE_PRODUCT_REQUEST:
+      return {loading: true}
+    case ADMIN_DELETE_PRODUCT_SUCCESS:
+      return {loading: false, deleteSuccess: true}
+    case ADMIN_DELETE_PRODUCT_FAIL:
+      return {loading: false, deleteError: action.payload}
     default: 
       return state
   }

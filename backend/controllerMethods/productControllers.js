@@ -3,7 +3,7 @@ import Product from '../models/productModel.js';
 
 
 // Get request to get all products
-// this uses /api/products/ route
+// this uses /db/products/ route
 // public route
 
 const getAllProducts = asyncHandler(async(req, res) => {
@@ -14,7 +14,7 @@ const getAllProducts = asyncHandler(async(req, res) => {
 
 
 // GET request to get a Prodcut by ID
-// this uses /api/products/:id route
+// this uses /db/products/:id route
 // public route
 
 const getProductById= asyncHandler(async(req, res) => {
@@ -27,7 +27,24 @@ const getProductById= asyncHandler(async(req, res) => {
   }
 })
 
+// DELETE product by id from AdminProductListPage.js
+// /db/product/:id/delete
+// private/admin
+
+const adminDeleteProduct = asyncHandler(async(req, res) => {
+  const product = await Product.findById(req.params.id)
+
+  if(product){
+    await product.remove();
+    res.json({message: `Product ${product.name} was deleted`});
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+})
+
 export { 
   getAllProducts, 
-  getProductById
+  getProductById,
+  adminDeleteProduct
 }

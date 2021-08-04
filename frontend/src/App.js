@@ -15,6 +15,7 @@ import ConfirmOrderPage from './pages/ConfirmOrderPage';
 import OrderPage from './pages/OrderPage';
 import AdminUserListPage from './pages/AdminUserListPage';
 import AdminUserEditPage from './pages/AdminUserEditPage';
+import AdminProductListPage from './pages/AdminProductListPage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path='/profile' component={ProfilePage} />
             <Route path='/aa/userlist' component={AdminUserListPage} />
             <Route path='/aa/user/:id/edit' component={AdminUserEditPage} />
+            <Route path='/aa/productlist' component={AdminProductListPage} />
           </Container>
         </main>
       <Footer />

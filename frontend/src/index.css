@@ -70,3 +70,12 @@ h3 {
   margin-left: 75px;
 }
 
+/* admin product list page styles */
+.link-container-icon {
+  border-radius: 5px;
+}
+
+.new-product-button {
+  display: flex;
+  justify-content: flex-end;
+}

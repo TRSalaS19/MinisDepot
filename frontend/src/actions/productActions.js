@@ -5,7 +5,9 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_INFO_REQUEST,
   PRODUCT_INFO_SUCCESS,
-  PRODUCT_INFO_FAIL
+  PRODUCT_INFO_FAIL,
+  ADMIN_DELETE_PRODUCT_REQUEST,
+  ADMIN_DELETE_PRODUCT_SUCCESS
 } from '../const/productConst';
 
 
@@ -37,6 +39,33 @@ export const productInfoList = (id) => async(dispatch) => {
     dispatch({
       type: PRODUCT_INFO_SUCCESS,
       payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_INFO_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+    })
+  }
+}
+
+export const adminProductDelete = (id) => async(dispatch, getState) => {
+  try {
+    dispatch({
+      type: ADMIN_DELETE_PRODUCT_REQUEST
+    })
+
+    const {login: {userInfo}} = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+
+    await axios.delete(`/db/products/${id}`, config)
+
+    dispatch({
+      type: ADMIN_DELETE_PRODUCT_SUCCESS
     })
   } catch (error) {
     dispatch({
