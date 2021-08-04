@@ -55,8 +55,6 @@ const userProfile = asyncHandler(async(req, res) => {
 // private
 
 const updateProfile = asyncHandler(async(req, res) => {
-  // if user is authenticated and authorized with jwt token. the route will return selected user info. 
-
   const user = await User.findById(req.user._id)
 
   if(user) {
@@ -149,11 +147,55 @@ const adminDeleteUser = asyncHandler(async(req, res) => {
   res.json(users);
 })
 
+// Get user by id from userListpage.js
+// GET/db/users/:id
+// private/admin
+
+const adminGetUserDetailsId = asyncHandler(async(req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
+  
+  if(user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found')
+  }
+})
+
+// Update user profile from userlistpage.js or amdmin user list
+// PUT/db/users/:id
+// private/admin
+
+const adminUpdateUser = asyncHandler(async(req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if(user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.isAdmin = req.body.isAdmin
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+})
+
+
 export {
   userAuth,
   userProfile,
   userRegister,
   updateProfile,
   getAdminUserList, 
-  adminDeleteUser
+  adminDeleteUser,
+  adminGetUserDetailsId,
+  adminUpdateUser
 }

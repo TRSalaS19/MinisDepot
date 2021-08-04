@@ -20,6 +20,10 @@ import {
   ADMIN_DELETE_USER_REQUEST,
   ADMIN_DELETE_USER_SUCCESS,
   ADMIN_DELETE_USER_FAIL,
+  ADMIN_UPDATE_USER_DETAILS_FAIL,
+  ADMIN_UPDATE_USER_DETAILS_SUCCESS,
+  ADMIN_UPDATE_USER_DETAILS_REQUEST,
+  ADMIN_UPDATE_USER_DETAILS_RESET,
 } from "../const/userConst"
   
 export const loginReducer = (state = {}, action) => {
@@ -101,6 +105,21 @@ export const adminDeleteUserReducer = (state = { }, action) => {
       return {loading:false, deleteSuccess: true }
     case ADMIN_DELETE_USER_FAIL:
       return {loading:false, error: action.payload}
+    default: 
+      return state
+  }
+}
+
+export const adminUpdateUserReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case ADMIN_UPDATE_USER_DETAILS_REQUEST:
+      return {loading:true}
+    case ADMIN_UPDATE_USER_DETAILS_SUCCESS:
+      return {loading:false, success: true, user: action.payload }
+    case ADMIN_UPDATE_USER_DETAILS_FAIL:
+      return {loading:false, error: action.payload}
+    case ADMIN_UPDATE_USER_DETAILS_RESET:
+      return { user: {}}
     default: 
       return state
   }

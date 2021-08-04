@@ -63,12 +63,19 @@ const UserListPage = ({history}) => {
                   }
                 </td>
                 <td>
-                  <LinkContainer to={`/user/${user._id}/edit`}>
-                    <Button variant='info' className='btn-sm'>
+                  <LinkContainer to={`/aa/user/${user._id}/edit`}>
+                    <Button 
+                    variant='info' 
+                    className='btn-sm'
+                    >
                       <i className="fas fa-user-edit"></i>
                     </Button>
                   </LinkContainer>
-                    <Button variant='danger' className='btn-sm' onClick={() => deleteUserHandler(user._id)}>
+                    <Button 
+                    variant='danger' 
+                    className='btn-sm' 
+                    onClick={() => deleteUserHandler(user._id)}
+                    >
                     <i className="fas fa-user-minus"></i>
                     </Button>
                 </td>
