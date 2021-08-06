@@ -1,5 +1,6 @@
 main {
-  height: 100vh;
+  /* height: 80vh; */
+  padding-bottom: 1.5rem;
 }
 h1 {
   padding: 1rem;
@@ -14,8 +15,17 @@ h2 {
 h3 {
   padding: 0.5rem 0;
 }
-
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
 /* footer styles */
+footer {
+  position: absolute;
+  width: 100%;
+  padding-bottom: 50px;
+  padding-top: 80px;
+}
 
 .footer-icon {
   padding: 5px;

@@ -8,6 +8,14 @@ import {
   ADMIN_DELETE_PRODUCT_REQUEST,
   ADMIN_DELETE_PRODUCT_SUCCESS,
   ADMIN_DELETE_PRODUCT_FAIL,
+  ADMIN_UPDATE_PRODUCT_REQUEST,
+  ADMIN_UPDATE_PRODUCT_SUCCESS,
+  ADMIN_UPDATE_PRODUCT_FAIL,
+  ADMIN_UPDATE_PRODUCT_RESET,
+  ADMIN_CREATE_NEW_PRODUCT_REQUEST,
+  ADMIN_CREATE_NEW_PRODUCT_SUCCESS,
+  ADMIN_CREATE_NEW_PRODUCT_FAIL,
+  ADMIN_CREATE_NEW_PRODUCT_RESET,
 } from '../const/productConst';
 
 export const productsListReducer = (state = { products: []}, action) => {
@@ -45,6 +53,36 @@ export const adminDeleteProductReducer = (state = {}, action) => {
     case ADMIN_DELETE_PRODUCT_FAIL:
       return {loading: false, deleteError: action.payload}
     default: 
+      return state
+  }
+}
+
+export const adminCreateNewProductReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_CREATE_NEW_PRODUCT_REQUEST:
+      return {loading: true }
+    case ADMIN_CREATE_NEW_PRODUCT_SUCCESS:
+      return {loading: false, successCreate: true, product: action.payload}
+    case ADMIN_CREATE_NEW_PRODUCT_FAIL:
+      return {loading: false, errorCreate: action.payload}
+    case ADMIN_CREATE_NEW_PRODUCT_RESET:
+      return {}
+    default: 
+      return state
+  }
+}
+
+export const adminUpdateProductReducer = (state = {product: {}}, action) => {
+  switch (action.type) {
+    case ADMIN_UPDATE_PRODUCT_REQUEST:
+      return {loading: true}
+    case ADMIN_UPDATE_PRODUCT_SUCCESS:
+      return {loading: false, updateSuccess: true, product: action.payload}
+    case ADMIN_UPDATE_PRODUCT_FAIL:
+      return {loading: false, updateError: action.payload}
+    case ADMIN_UPDATE_PRODUCT_RESET:
+      return {product: {}}
+    default:
       return state
   }
 }

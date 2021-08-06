@@ -43,8 +43,60 @@ const adminDeleteProduct = asyncHandler(async(req, res) => {
   }
 })
 
+// Create new product from admin page
+// POST/db/products
+// private/admin
+const adminCreateProduct = asyncHandler(async(req, res) => {
+  const product = new Product({
+    name: 'Sample Product',
+    price: 0,
+    user: req.user._id,
+    image: '/images/',
+    brand: 'Sample Brand',
+    unitsAvailable: 0,
+    numReviews: 0,
+    description: 'Sample Details'
+  })
+
+  const adminCreatedProduct = await product.save()
+  res.status(201).json(adminCreatedProduct)
+});
+
+// Update a prodoct from admin page
+// PUT/db/products/:id
+// private/admin
+const adminUpdateProduct = asyncHandler(async(req, res) => {
+  const {
+    name,
+    price,
+    description,
+    image,
+    brand,
+    unitsAvailable,
+  } = req.body;
+
+  const product = await Product.findById(req.params.id)
+
+  if(product) {
+    product.name = name
+    product.price = price
+    product.description = description
+    product.image = image
+    product.brand = brand
+    product.unitsAvailable = unitsAvailable
+
+    const adminUpdatedProduct = await product.save();
+    res.status(201).json(adminUpdatedProduct);
+  } else {
+    res.status(404);
+    throw new Error('Product not updated. Please try again');
+  }
+})
+
 export { 
   getAllProducts, 
   getProductById,
-  adminDeleteProduct
+  adminDeleteProduct,
+  adminCreateProduct,
+  adminUpdateProduct
 }

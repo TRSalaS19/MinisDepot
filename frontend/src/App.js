@@ -16,12 +16,13 @@ import OrderPage from './pages/OrderPage';
 import AdminUserListPage from './pages/AdminUserListPage';
 import AdminUserEditPage from './pages/AdminUserEditPage';
 import AdminProductListPage from './pages/AdminProductListPage';
+import AdminProductEditPage from './pages/AdminProductEditPage';
 
 function App() {
   return (
     <Router>
       <Header />
-        <main>
+        <main className='page-container'>
           <Container>
             <Route exact path='/' component={HomePage} />
             <Route path='/product/:id' component={ProductPage} />
@@ -35,10 +36,11 @@ function App() {
             <Route path='/profile' component={ProfilePage} />
             <Route path='/aa/userlist' component={AdminUserListPage} />
             <Route path='/aa/user/:id/edit' component={AdminUserEditPage} />
+            <Route path='/aa/product/:id/edit' component={AdminProductEditPage} />
             <Route path='/aa/productlist' component={AdminProductListPage} />
           </Container>
         </main>
-      <Footer />
+      <Footer className='footer'/>
     </Router>
   );
 }

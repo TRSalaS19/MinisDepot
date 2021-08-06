@@ -4,7 +4,13 @@ import { Table, Button, Row, Col} from 'react-bootstrap';
 import { useDispatch, useSelector} from 'react-redux';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { listAllProducts, adminProductDelete } from '../actions/productActions';
+import { 
+  listAllProducts, 
+  adminProductDelete, 
+  adminProductCreate 
+} from '../actions/productActions';
+import {ADMIN_CREATE_NEW_PRODUCT_RESET} from '../const/productConst';
+
 
 const AdminProductListPage = ({history, match}) => {
   const dispatch = useDispatch()
@@ -15,16 +21,25 @@ const AdminProductListPage = ({history, match}) => {
   const deleteProduct = useSelector((state) => state.adminDeleteProduct)
   const {loading: deleteLoading, deleteSuccess, deleteError} = deleteProduct
 
+  const createNewProduct = useSelector((state) => state.adminCreateNewProduct)
+  const {loading: createLoading, successCreate, errorCreate, product: createdProduct } = createNewProduct
+
   const userDetails = useSelector((state) => state.login);
   const {userInfo} = userDetails;
 
   useEffect(() => {
-    if(userInfo && userInfo.isAdmin) {
-      dispatch(listAllProducts())
-    } else {
+    dispatch({
+      type: ADMIN_CREATE_NEW_PRODUCT_RESET
+    })
+    if(!userInfo.isAdmin) {
       history.push('/login');
+    } 
+    if(successCreate){
+      history.push(`/aa/product/${createdProduct._id}/edit`)
+    }else {
+      dispatch(listAllProducts())
     }
-  },[dispatch, userInfo, history, deleteSuccess])
+  },[dispatch, userInfo, history, deleteSuccess, successCreate, createdProduct])
 
   const deleteProductHandler = (id) => {
     if(window.confirm('Are you sure you want to DELETE this product?'))
@@ -32,7 +47,7 @@ const AdminProductListPage = ({history, match}) => {
   }
 
   const adminCreateProductHandler = () => {
-    console.log("created");
+    dispatch(adminProductCreate())
   }
 
   return (
@@ -47,6 +62,8 @@ const AdminProductListPage = ({history, match}) => {
           </Button>
         </Col>
       </Row>
+      {createLoading && <LoadingSpinner />}
+      {errorCreate && <Alerts>{errorCreate}</Alerts>}
       {deleteLoading && <LoadingSpinner/>}
       {deleteError && <Alerts>{deleteError}</Alerts>}
       {loading ? (
