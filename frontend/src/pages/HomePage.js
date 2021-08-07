@@ -6,19 +6,21 @@ import {listAllProducts} from '../actions/productActions';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Alerts from '../components/Alerts';
 
-const HomePage = () => {
+const HomePage = ({ match }) => {
+  const keyword = match.params.keyword;
+
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
   const {loading, error, products} = productList;
 
   useEffect(() => {
-    dispatch(listAllProducts())
-  }, [dispatch]);
+    dispatch(listAllProducts(keyword))
+  }, [dispatch, keyword]);
 
 
   return (
-    <>
+    <div>
         {loading ? <LoadingSpinner /> : error ? <Alerts>{error}</Alerts> : (
         <>
         <h1>Our Current Styles</h1>
@@ -31,7 +33,7 @@ const HomePage = () => {
           </Row>
         </>
       )}
-    </>
+    </div>
   )
 }
 

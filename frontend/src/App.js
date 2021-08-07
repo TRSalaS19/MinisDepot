@@ -19,6 +19,7 @@ import AdminProductListPage from './pages/AdminProductListPage';
 import AdminProductEditPage from './pages/AdminProductEditPage';
 import AdminOrdersListPage from './pages/AdminOrdersListPage';
 
+
 function App() {
   return (
     <Router>
@@ -26,6 +27,7 @@ function App() {
         <main className='page-container'>
           <Container>
             <Route exact path='/' component={HomePage} />
+            <Route path='/search/:keyword' component={HomePage} />
             <Route path='/product/:id' component={ProductPage} />
             <Route path='/cart/:id?' component={CartPage} />
             <Route path='/login' component={LoginPage} />

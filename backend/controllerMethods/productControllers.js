@@ -7,7 +7,16 @@ import Product from '../models/productModel.js';
 // public route
 
 const getAllProducts = asyncHandler(async(req, res) => {
-  const products = await Product.find({})
+  // this gets the "keyword" from the search and uses regex to search for that
+  // keyword if no keyword is givin then its just empty object
+  const keyword = req.query.keyword ? {
+    name: {
+      $regex: req.query.keyword,
+      $options: 'i'
+    }
+  } : {}
+  // brings back all unless keyword is inputed then it searches products for that keyword.
+  const products = await Product.find({...keyword})
 
   res.json(products)
 })

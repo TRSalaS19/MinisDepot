@@ -40,6 +40,12 @@ footer {
   border: solid 2px #fff;
   border-radius: 50%;
 }
+.search-box {
+  margin-left: auto;
+}
+.search-button{
+  margin-left: 5px;
+}
 
 /* homePage syles */
 .card-name-link {
