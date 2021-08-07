@@ -16,6 +16,10 @@ import {
   ADMIN_CREATE_NEW_PRODUCT_SUCCESS,
   ADMIN_CREATE_NEW_PRODUCT_FAIL,
   ADMIN_CREATE_NEW_PRODUCT_RESET,
+  CREATE_PRODUCT_REVIEW_SUCCESS,
+  CREATE_PRODUCT_REVIEW_FAIL,
+  CREATE_PRODUCT_REVIEW_RESET,
+  CREATE_PRODUCT_REVIEW_REQUEST,
 } from '../const/productConst';
 
 export const productsListReducer = (state = { products: []}, action) => {
@@ -43,6 +47,23 @@ export const productInfoReducer = (state = { product: {reviews: []} }, action) =
       return state
   }
 }
+
+export const newReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CREATE_PRODUCT_REVIEW_REQUEST:
+      return {loading: true}
+    case CREATE_PRODUCT_REVIEW_SUCCESS:
+      return {loading: false, successReviewCreate: true}
+    case CREATE_PRODUCT_REVIEW_FAIL:
+      return {loading: false, error: action.payload}
+    case CREATE_PRODUCT_REVIEW_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+// admin product reducers: 
 
 export const adminDeleteProductReducer = (state = {}, action) => {
   switch(action.type) {

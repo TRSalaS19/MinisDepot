@@ -46,6 +46,7 @@ const Header = () => {
               </LinkContainer>              
               )}
               {userInfo && userInfo.isAdmin && (
+                /* /aa/ is for admin access */
                 <NavDropdown title='Admin Menu' id='adminMenu' className='mx-5' >
                   <LinkContainer to='/aa/userlist'>
                     <NavDropdown.Item>Admin User Menu</NavDropdown.Item>

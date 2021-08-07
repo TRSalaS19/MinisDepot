@@ -8,6 +8,7 @@ h1 {
 }
 
 h2 {
+  color: #7D7D7D;
   font-size: 1.4rem;
   padding: 0.5rem 0;
 }
@@ -79,6 +80,8 @@ footer {
 .confirm-order-button {
   margin-left: 75px;
 }
+
+
 
 /* admin product list page styles */
 .link-container-icon {

@@ -27,6 +27,82 @@ const getProductById= asyncHandler(async(req, res) => {
   }
 })
 
+// Create a new Product review
+// POST/db/products/:id/review
+// private/admin
+const createNewProductReview = asyncHandler(async(req, res) => {
+  const {
+    rating, 
+    comment
+  } = req.body;
+
+  const product = await Product.findById(req.params.id)
+
+  if(product) {
+    const userDidReview = 
+    product.reviews.find(review => 
+      review.user.toString() === req.user._id.toString()
+    )
+    if(userDidReview){
+      res.status(400);
+      throw new Error('You have already reviewed this product');
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id
+    }
+
+    product.reviews.push(review)
+
+    product.numReviews = product.reviews.length
+
+    product.rating= product.reviews.reduce((acc,item) => item.rating + acc, 0) / product.reviews.length
+    
+    await product.save()
+    res.status(201).json({message: 'Review added.'})
+  } else {
+    res.status(404);
+    throw new Error('Product not updated. Please try again');
+  }
+})
+
+
+// admin controllers:
+
+  // Create a new product review
+  // PUT/db/products/:id
+  // private/admin
+  const adminUpdateProduct = asyncHandler(async(req, res) => {
+    const {
+      name,
+      price,
+      description,
+      image,
+      brand,
+      unitsAvailable,
+    } = req.body;
+  
+    const product = await Product.findById(req.params.id)
+  
+    if(product) {
+      product.name = name
+      product.price = price
+      product.description = description
+      product.image = image
+      product.brand = brand
+      product.unitsAvailable = unitsAvailable
+  
+      const adminUpdatedProduct = await product.save();
+      res.status(201).json(adminUpdatedProduct);
+    } else {
+      res.status(404);
+      throw new Error('Product not updated. Please try again');
+    }
+  })
+
 // DELETE product by id from AdminProductListPage.js
 // /db/product/:id/delete
 // private/admin
@@ -62,40 +138,10 @@ const adminCreateProduct = asyncHandler(async(req, res) => {
   res.status(201).json(adminCreatedProduct)
 });
 
-// Update a prodoct from admin page
-// PUT/db/products/:id
-// private/admin
-const adminUpdateProduct = asyncHandler(async(req, res) => {
-  const {
-    name,
-    price,
-    description,
-    image,
-    brand,
-    unitsAvailable,
-  } = req.body;
-
-  const product = await Product.findById(req.params.id)
-
-  if(product) {
-    product.name = name
-    product.price = price
-    product.description = description
-    product.image = image
-    product.brand = brand
-    product.unitsAvailable = unitsAvailable
-
-    const adminUpdatedProduct = await product.save();
-    res.status(201).json(adminUpdatedProduct);
-  } else {
-    res.status(404);
-    throw new Error('Product not updated. Please try again');
-  }
-})
-
 export { 
   getAllProducts, 
   getProductById,
+  createNewProductReview,
   adminDeleteProduct,
   adminCreateProduct,
   adminUpdateProduct

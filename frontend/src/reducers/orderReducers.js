@@ -13,6 +13,10 @@ import {
   GET_USER_ORDERS_SUCCESS,
   GET_USER_ORDERS_FAIL,
   GET_USER_ORDERS_RESET,
+  ADMIN_ALL_ORDERS_LIST_SUCCESS,
+  ADMIN_ALL_ORDERS_LIST_FAIL,
+  ADMIN_ALL_ORDERS_LIST_REQUEST,
+  ADMIN_ALL_ORDERS_LIST_RESET,
 } from '../const/orderConst.js';
 
 export const createOrderReducer = (state = {}, action)  => {
@@ -68,6 +72,21 @@ export const getUserOrdersReducer = (state = { orders: []}, action) => {
     case GET_USER_ORDERS_FAIL: 
       return { loading: false, error: action.payload}
     case GET_USER_ORDERS_RESET:
+      return { orders: []}
+    default:
+      return state
+  }
+}
+
+export const adminOrdersListReducer = (state = {orders: []}, action) => {
+  switch (action.type) {
+    case ADMIN_ALL_ORDERS_LIST_REQUEST:
+      return {loading: true}
+    case ADMIN_ALL_ORDERS_LIST_SUCCESS: 
+      return {loading: false, orders: action.payload}
+    case ADMIN_ALL_ORDERS_LIST_FAIL: 
+      return {loading: false, error: action.payload}
+    case ADMIN_ALL_ORDERS_LIST_RESET:
       return { orders: []}
     default:
       return state

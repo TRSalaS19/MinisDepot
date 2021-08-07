@@ -17,6 +17,7 @@ import AdminUserListPage from './pages/AdminUserListPage';
 import AdminUserEditPage from './pages/AdminUserEditPage';
 import AdminProductListPage from './pages/AdminProductListPage';
 import AdminProductEditPage from './pages/AdminProductEditPage';
+import AdminOrdersListPage from './pages/AdminOrdersListPage';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path='/aa/user/:id/edit' component={AdminUserEditPage} />
             <Route path='/aa/product/:id/edit' component={AdminProductEditPage} />
             <Route path='/aa/productlist' component={AdminProductListPage} />
+            <Route path='/aa/orderlist' component={AdminOrdersListPage} />
           </Container>
         </main>
       <Footer className='footer'/>

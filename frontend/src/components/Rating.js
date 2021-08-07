@@ -63,6 +63,7 @@ const Rating = ({value, text, color}) => {
           }
         ></i>
       </span>
+      {/* /* below just states if there is text show text w/o having to us ternery operator */}
       <span>{text && text}</span>
     </div>
   )

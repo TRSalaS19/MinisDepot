@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './dbConfigs/databaseConfig.js';
+import morgan from 'morgan';
 import colors from 'colors';
 import {
   notFound , 
@@ -19,6 +20,11 @@ dotenv.config();
 connectDB();
 
 const app = express(); 
+
+if(process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
+
 app.use(express.json());
 
 app.get('/', (req, res) => {

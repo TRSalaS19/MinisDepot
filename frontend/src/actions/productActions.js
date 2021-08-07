@@ -13,7 +13,10 @@ import {
   ADMIN_CREATE_NEW_PRODUCT_FAIL,
   ADMIN_UPDATE_PRODUCT_REQUEST,
   ADMIN_UPDATE_PRODUCT_SUCCESS,
-  ADMIN_UPDATE_PRODUCT_FAIL
+  ADMIN_UPDATE_PRODUCT_FAIL,
+  CREATE_PRODUCT_REVIEW_REQUEST,
+  CREATE_PRODUCT_REVIEW_SUCCESS,
+  CREATE_PRODUCT_REVIEW_FAIL
 } from '../const/productConst';
 
 
@@ -53,6 +56,37 @@ export const productInfo = (id) => async(dispatch) => {
     })
   }
 }
+
+export const reviewCreate = (productId, review) => async(dispatch, getState) => {
+  try {
+    dispatch({
+      type: CREATE_PRODUCT_REVIEW_REQUEST
+    })
+
+    const {login: {userInfo}} = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+
+    const { data } = await axios.post(`/db/products/${productId}/reviews`, review, config)
+
+    dispatch({
+      type: CREATE_PRODUCT_REVIEW_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: CREATE_PRODUCT_REVIEW_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+    })
+  }
+}
+
+// ADMIN product actions: 
 
 export const adminProductDelete = (id) => async(dispatch, getState) => {
   try {

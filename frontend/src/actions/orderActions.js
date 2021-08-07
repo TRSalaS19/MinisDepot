@@ -12,6 +12,8 @@ import {
   GET_USER_ORDERS_REQUEST,
   GET_USER_ORDERS_SUCCESS,
   GET_USER_ORDERS_FAIL,
+  ADMIN_ALL_ORDERS_LIST_REQUEST,
+  ADMIN_ALL_ORDERS_LIST_SUCCESS,
 } from '../const/orderConst';
 
 export const createOrder = (order) => async(dispatch, getState) => {
@@ -124,6 +126,36 @@ export const getUserOrdersList = (orderId, paymentResult) => async (dispatch, ge
 
     dispatch({
       type: GET_USER_ORDERS_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: GET_USER_ORDERS_FAIL,
+      payload: error.response && error.response.data.message
+      ? error.message.data.message 
+      : error.message
+    })
+  }
+}
+
+export const adminOrdersList = () => async(dispatch, getState) => {
+  try {
+    dispatch({
+      type: ADMIN_ALL_ORDERS_LIST_REQUEST
+    })
+
+    const {login: {userInfo}} = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+
+    const { data } = await axios.get(`/db/orders`, config);
+
+    dispatch({
+      type: ADMIN_ALL_ORDERS_LIST_SUCCESS,
       payload: data
     })
   } catch (error) {

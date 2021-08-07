@@ -104,7 +104,7 @@ const OrderPage = ({match}) => {
                       {order.paymentOption}
                     </p>
                     {order.isPaid ? (
-                      <Alerts variant="info">Paid on {order.paidAt}</Alerts>
+                      <Alerts variant="primary">Paid on {order.paidAt.substring(0,10)}</Alerts>
                     ) : (
                       <Alerts variant='warning'>Not Paid</Alerts>
                     )}
@@ -119,12 +119,23 @@ const OrderPage = ({match}) => {
                             <ListGroup.Item key={index}>
                               <Row>
                                 <Col md={2}>
-                                  <Link className='text-decoration-none' to={`/product/${item.product}`}>
-                                    <Image src={item.image} alt={item.name} fluid rounded />
+                                  <Link 
+                                    className='text-decoration-none' 
+                                    to={`/product/${item.product}`}
+                                  >
+                                    <Image 
+                                      src={item.image} 
+                                      alt={item.name} 
+                                      fluid 
+                                      rounded 
+                                    />
                                   </Link>
                                 </Col>
                                 <Col>
-                                  <Link className='text-decoration-none' to={`/product/${item.product}`}>
+                                  <Link 
+                                    className='text-decoration-none' 
+                                    to={`/product/${item.product}`}
+                                  >
                                     {item.name}
                                   </Link>
                                 </Col>

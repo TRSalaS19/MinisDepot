@@ -21,8 +21,8 @@ const orderDetails = asyncHandler(async(req, res) => {
     throw new Error('No items in this order.')
   } else {
     const order = new Order({
-      user: req.user._id,
       orderItems, 
+      user: req.user._id,
       shippingAddress, 
       paymentOption, 
       itemsPrice, 
@@ -42,9 +42,13 @@ const orderDetails = asyncHandler(async(req, res) => {
 const getOrderDetailsId = asyncHandler(async(req,res) => {
   const order = await Order.findById(req.params.id).populate('user', 'name email');
 
-  order ? res.json(order) : res.status(404); throw new Error('Order was not found. Please try again')
-
-})
+  if (order) {
+    res.json(order) 
+  } else {
+    res.status(404)
+    throw new Error('Order was not found. Please try again')
+  } 
+});
 
 //update our order to paid once paid:
 // get/db/orders/:id/pay
@@ -82,9 +86,20 @@ const getUserOrders = asyncHandler(async(req,res) => {
   res.json(orders)
 })
 
+// GET all orders for admin list:
+// get/db/orders
+// privata/admin
+
+const adminOrdersList = asyncHandler(async(req,res) => {
+  const orders = await Order.find({}).populate('user', 'id name')
+
+  res.json(orders)
+})
+
 export {
   orderDetails,
   getOrderDetailsId,
   orderPaidUpdate, 
-  getUserOrders
+  getUserOrders,
+  adminOrdersList
 }
