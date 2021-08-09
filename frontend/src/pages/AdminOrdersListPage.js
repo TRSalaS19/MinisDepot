@@ -2,6 +2,7 @@ import React,{useEffect} from 'react';
 import {LinkContainer} from 'react-router-bootstrap';
 import {Table, Button} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
 import {adminOrdersList} from '../actions/orderActions';
@@ -33,6 +34,7 @@ const AdminOrdersListPage = ({history}) => {
         <Alerts>{error}</Alerts>
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
+        <HelmetMeta title='Admin Order List' />
           <thead>
             <tr>
               <th>ID</th>

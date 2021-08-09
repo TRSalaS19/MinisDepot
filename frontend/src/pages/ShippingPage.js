@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import { Form, Button, ProgressBar} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import FormFields from '../components/FormFields';
 import CheckoutProg from '../components/CheckoutProg';
 import {saveAddress} from '../actions/cartActions';
@@ -25,6 +26,7 @@ const ShippingPage = ({history}) => {
 
   return (
     <FormFields>
+    <HelmetMeta title='Shipping' />
       <CheckoutProg step1 step2/>
       <ProgressBar variant='danger' animated now={50} />
       <h1>Shipping</h1>

@@ -7,6 +7,9 @@ import Product from '../models/productModel.js';
 // public route
 
 const getAllProducts = asyncHandler(async(req, res) => {
+  // for pagination of products list:
+  const pageProductLimit = 4
+  const page = Number(req.query.pageNumber) || 1
   // this gets the "keyword" from the search and uses regex to search for that
   // keyword if no keyword is givin then its just empty object
   const keyword = req.query.keyword ? {
@@ -15,10 +18,13 @@ const getAllProducts = asyncHandler(async(req, res) => {
       $options: 'i'
     }
   } : {}
+  const productCount = await Product.countDocuments({...keyword})
   // brings back all unless keyword is inputed then it searches products for that keyword.
   const products = await Product.find({...keyword})
-
-  res.json(products)
+    .limit(pageProductLimit)
+    .skip(pageProductLimit * (page - 1))
+  
+  res.json({products, page, pages: Math.ceil(productCount / pageProductLimit)});
 })
 
 
@@ -76,6 +82,15 @@ const createNewProductReview = asyncHandler(async(req, res) => {
     res.status(404);
     throw new Error('Product not updated. Please try again');
   }
+})
+
+// Get featured products with top ratings
+// GET/db/products/toprated
+// public
+
+const getTopRatedProducts = asyncHandler(async (req, res) => {
+  const topProducts = await Product.find({}).sort({rating: -1}).limit(3);
+  res.json(topProducts);
 })
 
 
@@ -151,6 +166,7 @@ export {
   getAllProducts, 
   getProductById,
   createNewProductReview,
+  getTopRatedProducts,
   adminDeleteProduct,
   adminCreateProduct,
   adminUpdateProduct

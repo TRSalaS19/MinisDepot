@@ -10,6 +10,7 @@ import {
   ProgressBar,
 } from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import CheckoutProg from '../components/CheckoutProg';
 import {createOrder} from '../actions/orderActions';
@@ -54,6 +55,7 @@ const ConfirmOrderPage = ({history}) => {
 
   return (
     <>
+      <HelmetMeta title='Confirm Order' />
       <CheckoutProg step1 step2 step3 step4 />
       <ProgressBar variant='danger' animated now={100} />
       <Row>

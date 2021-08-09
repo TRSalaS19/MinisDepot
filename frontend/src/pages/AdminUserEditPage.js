@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {Form, Button} from 'react-bootstrap';
 import { useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
 import FormFields from '../components/FormFields'
@@ -48,7 +49,7 @@ const AdminUserEditPage = ({match, history}) => {
   return (
     <>
       <Link to='/aa/userlist' className='btn btn-danger my-3'>
-        Return to List
+      <i className="fas fa-hand-point-left"></i> Return
       </Link>
       <FormFields>
           <h1>Edit User Details</h1>
@@ -60,6 +61,7 @@ const AdminUserEditPage = ({match, history}) => {
             <Alerts>{error}</Alerts>
           ) : (
             <Form onSubmit={submitHandler}>
+            <HelmetMeta title='Admin User Edit' />
               <Form.Group controlId='name'>
                 <Form.Label className='m-1'>Name</Form.Label>
                 <Form.Control 

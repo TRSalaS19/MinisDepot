@@ -2,6 +2,7 @@ import React, {useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {Row, Col, ListGroup, Image, Form, Button, Card} from 'react-bootstrap';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import {AddToCart, removeFromCart} from '../actions/cartActions';
 
@@ -32,6 +33,7 @@ const CartPage = ({match, location, history}) => {
 
   return (
       <Row>
+      <HelmetMeta title='Cart' />
         <Col md={8}>
           <h1>Shopping Cart</h1>
           {cartItems.length === 0 ? (

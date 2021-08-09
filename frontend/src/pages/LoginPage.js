@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {Form, Button, Row, Col} from 'react-bootstrap';
 import { useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { login } from '../actions/userActions';
@@ -32,6 +33,7 @@ const LoginPage = ({location, history}) => {
 
   return (
     <FormFields>
+    <HelmetMeta title='Login' />
         <h1>Sign In</h1>
         {loading && <LoadingSpinner/>}
         {error && <Alerts>{error}</Alerts>}

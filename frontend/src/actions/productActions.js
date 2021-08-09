@@ -16,15 +16,20 @@ import {
   ADMIN_UPDATE_PRODUCT_FAIL,
   CREATE_PRODUCT_REVIEW_REQUEST,
   CREATE_PRODUCT_REVIEW_SUCCESS,
-  CREATE_PRODUCT_REVIEW_FAIL
+  CREATE_PRODUCT_REVIEW_FAIL,
+  TOP_RATED_PRODUCTS_REQUEST,
+  TOP_RATED_PRODUCTS_SUCCESS,
+  TOP_RATED_PRODUCTS_FAIL,
 } from '../const/productConst';
 
 
-export const listAllProducts = (keyword = '') => async(dispatch) => {
+export const listAllProducts = (keyword = '', pageNumber='') => async(dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
-    const { data } = await axios.get(`/db/products?keyword=${keyword}`)
+    const { data } = await axios.get(
+      `/db/products?keyword=${keyword}&pageNumber=${pageNumber}`
+    )
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -34,7 +39,10 @@ export const listAllProducts = (keyword = '') => async(dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_LIST_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && 
+      error.response.data.message ? 
+      error.response.data.message : 
+      error.message
     })
   }
 }
@@ -52,7 +60,10 @@ export const productInfo = (id) => async(dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_INFO_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && 
+        error.response.data.message ? 
+        error.response.data.message : 
+        error.message
     })
   }
 }
@@ -81,7 +92,33 @@ export const reviewCreate = (productId, review) => async(dispatch, getState) => 
   } catch (error) {
     dispatch({
       type: CREATE_PRODUCT_REVIEW_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && 
+      error.response.data.message ? 
+      error.response.data.message : 
+      error.message
+    })
+  }
+}
+
+export const listProductsTopRated = () => async(dispatch) => {
+  try {
+    dispatch({
+      type: TOP_RATED_PRODUCTS_REQUEST
+    })
+
+    const {data} = await axios.get(`/db/products/toprated`)
+
+    dispatch({
+      type: TOP_RATED_PRODUCTS_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: TOP_RATED_PRODUCTS_FAIL,
+      payload: error.response && 
+      error.response.data.message ?
+      error.response.data.message :
+      error.message
     })
   }
 }
@@ -110,7 +147,10 @@ export const adminProductDelete = (id) => async(dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_INFO_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && 
+      error.response.data.message ? 
+      error.response.data.message : 
+      error.message
     })
   }
 }
@@ -138,7 +178,10 @@ export const adminProductCreate = () => async(dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_CREATE_NEW_PRODUCT_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && 
+      error.response.data.message ? 
+      error.response.data.message : 
+      error.message
     })
   }
 }
@@ -167,7 +210,10 @@ export const adminProductUpdate = (product) => async(dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_UPDATE_PRODUCT_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && 
+      error.response.data.message ? 
+      error.response.data.message : 
+      error.message
     })
   }
 }

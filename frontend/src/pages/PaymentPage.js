@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import { Form, Button, ProgressBar, Col} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import FormFields from '../components/FormFields';
 import CheckoutProg from '../components/CheckoutProg';
 import {savePaymentOption} from '../actions/cartActions';
@@ -25,6 +26,7 @@ const PaymentPage = ({history}) => {
 
   return (
     <FormFields>
+      <HelmetMeta title='Payment' />
       <CheckoutProg step1 step2 step3/>
       <ProgressBar variant='danger' animated now={75}/>
       <h1>Payment Option</h1>

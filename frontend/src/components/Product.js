@@ -13,7 +13,7 @@ const Product = ({product}) => {
       <Card.Body>
           <Card.Title as='div'>
           <Link className='card-name-link' to={`/product/${product._id}`}>
-            <strong>{product.name}</strong>
+            <strong>{product.name.toUpperCase()}</strong>
           </Link>
           </Card.Title>
         <Card.Text as='div'>

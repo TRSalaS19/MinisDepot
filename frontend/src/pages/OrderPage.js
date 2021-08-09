@@ -11,6 +11,7 @@ import {
   Card, 
 } from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
 import {getOrderDetails, orderPayment} from '../actions/orderActions';
@@ -76,6 +77,7 @@ const OrderPage = ({match}) => {
       <Alerts>{error}</Alerts>
       ) : (
       <>
+          <HelmetMeta title='Order Page' />
           <h1>Order {order._id}</h1>
             <Row>
               <Col md={8}>

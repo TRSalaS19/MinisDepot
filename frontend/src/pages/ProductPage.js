@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, ListGroup, Card, Button, Image, Form} from 'react-bootstrap';
+import HelmetMeta from '../components/HelmetMeta';
 import Rating from '../components/Rating';
 import { productInfo, reviewCreate } from '../actions/productActions';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -56,8 +57,13 @@ const ProductPage = ({ match, history }) => {
       <Link className='btn btn-danger my-3' to='/'>
         <i className="fas fa-hand-point-left"></i> Go Back
       </Link>
-      {loading ? <LoadingSpinner /> : error ? <Alerts>{error}</Alerts> : (
+      {loading ? (
+        <LoadingSpinner />
+        ) : error ? (
+          <Alerts>{error}</Alerts>
+        ) : (
         <div>
+        <HelmetMeta title='Product Page' />
           <Row>
             <Col md={5}>
               <Image src={product.image} alt={product.name} fluid rounded/>

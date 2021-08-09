@@ -27,7 +27,10 @@ function App() {
         <main className='page-container'>
           <Container>
             <Route exact path='/' component={HomePage} />
-            <Route path='/search/:keyword' component={HomePage} />
+            {/* path to search by keyword  */}
+            <Route path='/search/:keyword' component={HomePage} exact />
+            {/* path for pagination */}
+            <Route path='/page/:pageNumber' component={HomePage} exact />
             <Route path='/product/:id' component={ProductPage} />
             <Route path='/cart/:id?' component={CartPage} />
             <Route path='/login' component={LoginPage} />
@@ -40,7 +43,11 @@ function App() {
             <Route path='/aa/userlist' component={AdminUserListPage} />
             <Route path='/aa/user/:id/edit' component={AdminUserEditPage} />
             <Route path='/aa/product/:id/edit' component={AdminProductEditPage} />
-            <Route path='/aa/productlist' component={AdminProductListPage} />
+            <Route path='/aa/productlist' component={AdminProductListPage} exact/>
+            {/* path for admin productlist pagination */}
+            <Route path='/aa/productlist/:pageNumber' component={AdminProductListPage} exact/>
+            {/* path for pagination from search results */}
+            <Route path='/search/:keyword/page/:pageNumber' component={HomePage} exact />
             <Route path='/aa/orderlist' component={AdminOrdersListPage} />
           </Container>
         </main>

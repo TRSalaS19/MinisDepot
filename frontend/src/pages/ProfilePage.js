@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { Form, Button, Row, Col, Table} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
 import {getProfileDetails, profileUpdate} from '../actions/userActions';
@@ -53,7 +54,15 @@ const ProfilePage = ({location, history}) => {
     }
   }
 
-  return (
+return (
+  <div>
+
+    <Link 
+      to='/aa/productlist' 
+      className='btn bg-danger my-3'
+    >
+      <i className="fas fa-hand-point-left"></i> Return
+    </Link>
     <Row>
       <Col md={3}>
         <h2>Your Profile Details</h2>
@@ -61,6 +70,7 @@ const ProfilePage = ({location, history}) => {
         {success && <Alerts variant='info'>Profile Updated</Alerts>}
         {error && <Alerts>{error}</Alerts>}
         {loading && <LoadingSpinner/>}
+        <HelmetMeta title='User Profile' />
         <Form onSubmit={submitHandler}>
 
           <Form.Group controlId='name'>
@@ -98,7 +108,7 @@ const ProfilePage = ({location, history}) => {
             }></Form.Control>
           </Form.Group>
 
-          <Button className='my-3'type='submit' variant='primary'>
+          <Button className='my-3'type='submit' variant='danger'>
             Update Profile
           </Button>
 
@@ -112,7 +122,7 @@ const ProfilePage = ({location, history}) => {
         ) : orderListError ? (
           <Alerts>{orderListError}</Alerts>
         ) : (
-          <Table variant='primary' bordered striped hover responsive rounded="true" className='table-sm'>
+          <Table bordered striped hover responsive rounded="true" className='table-sm'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -142,6 +152,7 @@ const ProfilePage = ({location, history}) => {
         )}
       </Col>
     </Row>
+  </div>
   )
 }
 

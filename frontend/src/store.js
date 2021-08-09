@@ -11,7 +11,8 @@ import {
   newReviewCreateReducer,
   adminDeleteProductReducer,
   adminCreateNewProductReducer,
-  adminUpdateProductReducer
+  adminUpdateProductReducer,
+  ratedTopProductsReducer
 } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
 import {
@@ -54,16 +55,35 @@ const reducer = combineReducers({
   register: registerReducer,
   userOrderList: getUserOrdersReducer,
   updateProfile: profileUpdateReducer,
+  productTopRated: ratedTopProductsReducer,
 });
 
-const cartItemsFromStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
-const userDetailsFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
-const shippingAddressFromStorage = localStorage.getItem('shippingAddress') ? JSON.parse(localStorage.getItem('shippingAddress')) : {}
-const paymentOptionFromStorage = localStorage.getItem('paymentOption') ? JSON.parse(localStorage.getItem('paymentOption')) : {}
+const cartItemsFromStorage = 
+  localStorage.getItem('cartItems') ? 
+  JSON.parse(localStorage.getItem('cartItems')) : 
+  [];
+const userDetailsFromStorage = 
+  localStorage.getItem('userInfo') ? 
+  JSON.parse(localStorage.getItem('userInfo')) : 
+  null;
+const shippingAddressFromStorage = 
+  localStorage.getItem('shippingAddress') ? 
+  JSON.parse(localStorage.getItem('shippingAddress')) : 
+  {};
+const paymentOptionFromStorage = 
+  localStorage.getItem('paymentOption') ? 
+  JSON.parse(localStorage.getItem('paymentOption')) : 
+  {};
 
 const initialState = {
-  cart: {cartItems: cartItemsFromStorage, shippingAddress: shippingAddressFromStorage, paymentOption: paymentOptionFromStorage},
-  login: {userInfo: userDetailsFromStorage},
+  cart: {
+    cartItems: cartItemsFromStorage, 
+    shippingAddress: shippingAddressFromStorage, 
+    paymentOption: paymentOptionFromStorage
+  },
+  login: {
+    userInfo: userDetailsFromStorage
+  },
 };
 
 const middleware = [thunk];

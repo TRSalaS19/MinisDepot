@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {Form, Button, Row, Col} from 'react-bootstrap';
 import { useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { register } from '../actions/userActions';
@@ -43,6 +44,7 @@ const RegisterPage = ({location, history}) => {
         {loading && <LoadingSpinner/>}
         {message && <Alerts variant='danger'>{message}</Alerts>}
         {error && <Alerts>{error}</Alerts>}
+        <HelmetMeta title='Register' />
         <Form onSubmit={submitHandler}>
 
           <Form.Group controlId='name'>

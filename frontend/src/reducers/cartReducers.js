@@ -19,7 +19,7 @@ export const cartReducer = (state = {cartItems: [], shippingAddress: {} }, actio
       if(itemExists) {
         return {
           ...state,
-          cartItems: state.cartItems.map(i => i.product === itemExists.product ? item: i)
+          cartItems: state.cartItems.map(i => i.product === itemExists.product ? item : i)
         }
       } else {
         return {

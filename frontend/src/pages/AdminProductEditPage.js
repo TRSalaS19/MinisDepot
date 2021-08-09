@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {Form, Button} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
 import FormFields from '../components/FormFields';
@@ -84,7 +85,7 @@ const AdminProductEditPage = ({match, history}) => {
   }
 
   return (
-    <>
+    <div>
       <Link 
         to='/aa/productlist' 
         className='btn bg-danger my-3'
@@ -101,6 +102,7 @@ const AdminProductEditPage = ({match, history}) => {
           <Alerts>{error}</Alerts>
         ) : (
           <Form onSubmit={updateSubmitHandler}>
+          <HelmetMeta title='Admin Product Edit Screen' />
             <Form.Group controlId='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -179,7 +181,7 @@ const AdminProductEditPage = ({match, history}) => {
           </Form>
         )}
       </FormFields>
-    </>
+    </div>
   )
 }
 
