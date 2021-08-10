@@ -25,19 +25,21 @@ const ProductPage = ({ match, history }) => {
   const {userInfo} = userDetails;
 
   const createUserReview = useSelector((state) => state.createNewReview);
-  const { errorReview, successReviewCreate} = createUserReview;
+  const { loading: createReviewLoading, errorReview, successReviewCreate, } = createUserReview;
 
   useEffect(() => {
     if(successReviewCreate){
       alert('Your Review has been submitted. Thank you!')
       setRating(0)
       setComment('')
+    }
+    if(!product._id || product._id !== match.params.id){
+      dispatch(productInfo(match.params.id))
       dispatch({
         type: CREATE_PRODUCT_REVIEW_RESET
       })
     }
-    dispatch(productInfo(match.params.id))
-  }, [dispatch,match, successReviewCreate])
+  }, [dispatch,match, successReviewCreate,product._id])
 
 
   const addToCartHandler = () => {
@@ -53,7 +55,7 @@ const ProductPage = ({ match, history }) => {
   }
 
   return (
-    <>
+    <div>
       <Link className='btn btn-danger my-3' to='/'>
         <i className="fas fa-hand-point-left"></i> Go Back
       </Link>
@@ -66,7 +68,12 @@ const ProductPage = ({ match, history }) => {
         <HelmetMeta title='Product Page' />
           <Row>
             <Col md={5}>
-              <Image src={product.image} alt={product.name} fluid rounded/>
+              <Image 
+                src={product.image} 
+                alt={product.name} 
+                fluid 
+                rounded
+              />
             </Col>
             <Col md={4}>
               <ListGroup variant='flush'>
@@ -162,6 +169,8 @@ const ProductPage = ({ match, history }) => {
 									))}
 									<ListGroup.Item>
 										<h2>Submit Your Review Here</h2>
+                    {successReviewCreate && <Alerts vairant="info">Review Submitted</Alerts>}
+                    {createReviewLoading && <LoadingSpinner />}
 										{errorReview && <Alerts vairant='warning'>{errorReview}</Alerts>}
 										{userInfo ? (
 											<Form onSubmit={submitReviewHandler}>
@@ -208,7 +217,7 @@ const ProductPage = ({ match, history }) => {
           </Row>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

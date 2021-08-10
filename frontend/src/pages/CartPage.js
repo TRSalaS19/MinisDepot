@@ -72,7 +72,11 @@ const CartPage = ({match, location, history}) => {
                         </Form.Control>
                     </Col>
                     <Col md={2}>
-                      <Button type='button' variant='danger' onClick={(e) => removeFromCartHandler(item.product)}>
+                      <Button 
+                        type='button' 
+                        variant='danger' 
+                        onClick={(e) => removeFromCartHandler(item.product)}
+                      >
                         <i className='fas fa-trash'></i>
                       </Button>
                     </Col>
@@ -86,11 +90,20 @@ const CartPage = ({match, location, history}) => {
            <Card className='my-4 bg-primary p-2'>
              <ListGroup variant='flush'>
                <ListGroup.Item >
-                 <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.itemQty, 0)}) items</h2>
+                 <h2>
+                  Subtotal ({cartItems.reduce((acc, item) => acc + item.itemQty, 0)}) items
+                 </h2>
                  ${cartItems.reduce((acc, item) => acc + item.itemQty * item.price, 0).toFixed(2)}
                </ListGroup.Item>
                <ListGroup.Item>
-                 <Button type='button' variant='danger' disabled={cartItems.length === 0} onClick={checkoutHandler}>Checkout</Button>
+                 <Button 
+                  type='button' 
+                  variant='danger' 
+                  disabled={cartItems.length === 0} 
+                  onClick={checkoutHandler}
+                >
+                  Checkout <i className="fas fa-credit-card"></i>
+                </Button>
                </ListGroup.Item>
              </ListGroup>
            </Card>                      

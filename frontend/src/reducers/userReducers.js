@@ -6,6 +6,7 @@ import {
   REGISTER_FAIL,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
+  PROFILE_DETAILS_RESET,
   PROFILE_DETAILS_FAIL,
   PROFILE_DETAILS_REQUEST,
   PROFILE_DETAILS_SUCCESS,
@@ -49,6 +50,8 @@ export const registerReducer = (state = {}, action) => {
       return {loading:false, userInfo: action.payload}
     case REGISTER_FAIL:
       return {loading:false, error: action.payload}
+    case LOGOUT : 
+      return {}
     default: 
       return state
   }
@@ -62,14 +65,14 @@ export const profileDetailsReducer = (state = { user: {}}, action) => {
       return {loading:false, user: action.payload}
     case PROFILE_DETAILS_FAIL:
       return {loading:false, error: action.payload}
-    case PROFILE_UPDATE_RESET:
+    case PROFILE_DETAILS_RESET:
       return { user: {} }
     default: 
       return state
   }
 }
 
-export const profileUpdateReducer = (state = { }, action) => {
+export const profileUpdateReducer = (state = {}, action) => {
   switch (action.type) {
     case PROFILE_UPDATE_REQUEST:
       return {loading:true}
@@ -77,6 +80,8 @@ export const profileUpdateReducer = (state = { }, action) => {
       return {loading:false,success: true, userInfo: action.payload }
     case PROFILE_UPDATE_FAIL:
       return {loading:false, error: action.payload}
+    case PROFILE_UPDATE_RESET:
+      return {}
     default: 
       return state
   }

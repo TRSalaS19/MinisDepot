@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
-import {adminOrdersList} from '../actions/orderActions';
+import {adminListOfOrders} from '../actions/orderActions';
 
 
 const AdminOrdersListPage = ({history}) => {
@@ -19,7 +19,7 @@ const AdminOrdersListPage = ({history}) => {
 
   useEffect(() => {
     if(userInfo && userInfo.isAdmin){
-      dispatch(adminOrdersList())
+      dispatch(adminListOfOrders())
     } else {
       history.push('/login')
     }

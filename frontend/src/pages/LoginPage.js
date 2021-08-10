@@ -42,24 +42,28 @@ const LoginPage = ({location, history}) => {
             <Form.Label className='m-1'>Email Address</Form.Label>
             <Form.Control 
               type='email' 
-              value={email} onChange={(e) => setEmail(e.target.value)
-            }></Form.Control>
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)}
+            ></Form.Control>
           </Form.Group>
           <Form.Group controlId='password'>
             <Form.Label className='m-1'>Password</Form.Label>
             <Form.Control 
               type='password' 
               value={password} 
-              onChange={(e) => setPassword(e.target.value)
-            }></Form.Control>
+              onChange={(e) => setPassword(e.target.value)}
+            ></Form.Control>
           </Form.Group>
-          <Button className='my-3' type='submit' variant='primary'>
-            Sign In
+          <Button className='my-3' type='submit' variant='danger'>
+            Login
           </Button>
         </Form>
         <Row className='py-3'>
           <Col>
-            New Customer? <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>
+            New Customer? {" "}
+            <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
+              Register
+            </Link>
           </Col>
         </Row>
     </FormFields>

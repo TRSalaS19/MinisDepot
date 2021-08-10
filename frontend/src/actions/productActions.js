@@ -8,6 +8,7 @@ import {
   PRODUCT_INFO_FAIL,
   ADMIN_DELETE_PRODUCT_REQUEST,
   ADMIN_DELETE_PRODUCT_SUCCESS,
+  ADMIN_DELETE_PRODUCT_FAIL,
   ADMIN_CREATE_NEW_PRODUCT_REQUEST,
   ADMIN_CREATE_NEW_PRODUCT_SUCCESS,
   ADMIN_CREATE_NEW_PRODUCT_FAIL,
@@ -21,9 +22,10 @@ import {
   TOP_RATED_PRODUCTS_SUCCESS,
   TOP_RATED_PRODUCTS_FAIL,
 } from '../const/productConst';
+import {logout} from './userActions';
 
-
-export const listAllProducts = (keyword = '', pageNumber='') => async(dispatch) => {
+export const listAllProducts = (keyword = '', pageNumber='') => async(
+  dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
@@ -68,7 +70,8 @@ export const productInfo = (id) => async(dispatch) => {
   }
 }
 
-export const reviewCreate = (productId, review) => async(dispatch, getState) => {
+export const reviewCreate = (productId, review) => async(
+  dispatch, getState) => {
   try {
     dispatch({
       type: CREATE_PRODUCT_REVIEW_REQUEST
@@ -83,19 +86,26 @@ export const reviewCreate = (productId, review) => async(dispatch, getState) => 
       }
     }
 
-    const { data } = await axios.post(`/db/products/${productId}/reviews`, review, config)
+    await axios.post(
+      `/db/products/${productId}/reviews`, 
+      review, 
+      config
+    )
 
     dispatch({
-      type: CREATE_PRODUCT_REVIEW_SUCCESS,
-      payload: data
+      type: CREATE_PRODUCT_REVIEW_SUCCESS
     })
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: CREATE_PRODUCT_REVIEW_FAIL,
-      payload: error.response && 
-      error.response.data.message ? 
-      error.response.data.message : 
-      error.message
+      payload: message
     })
   }
 }
@@ -145,12 +155,16 @@ export const adminProductDelete = (id) => async(dispatch, getState) => {
       type: ADMIN_DELETE_PRODUCT_SUCCESS
     })
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
-      type: PRODUCT_INFO_FAIL,
-      payload: error.response && 
-      error.response.data.message ? 
-      error.response.data.message : 
-      error.message
+      type: ADMIN_DELETE_PRODUCT_FAIL,
+      payload: message
     })
   }
 }
@@ -176,17 +190,22 @@ export const adminProductCreate = () => async(dispatch, getState) => {
       payload: data
     })
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: ADMIN_CREATE_NEW_PRODUCT_FAIL,
-      payload: error.response && 
-      error.response.data.message ? 
-      error.response.data.message : 
-      error.message
+      payload: message
     })
   }
 }
 
-export const adminProductUpdate = (product) => async(dispatch, getState) => {
+export const adminProductUpdate = (product) => async(
+  dispatch, getState) => {
   try {
     dispatch({
       type: ADMIN_UPDATE_PRODUCT_REQUEST
@@ -201,19 +220,27 @@ export const adminProductUpdate = (product) => async(dispatch, getState) => {
       }
     };
 
-    const {data} = await axios.put(`/db/products/${product._id}`, product, config);
+    const {data} = await axios.put(
+      `/db/products/${product._id}`, 
+      product, 
+      config
+    );
 
     dispatch({
       type: ADMIN_UPDATE_PRODUCT_SUCCESS,
       payload: data
     });
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }  
     dispatch({
       type: ADMIN_UPDATE_PRODUCT_FAIL,
-      payload: error.response && 
-      error.response.data.message ? 
-      error.response.data.message : 
-      error.message
+      payload: message
     })
   }
 }

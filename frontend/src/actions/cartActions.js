@@ -47,6 +47,5 @@ export const savePaymentOption = (data) => (dispatch) => {
     type: PAYMENT_OPTION, 
     payload: data
   })
-
   localStorage.setItem('paymentOption', JSON.stringify(data));
 }

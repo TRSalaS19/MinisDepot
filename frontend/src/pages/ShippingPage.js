@@ -29,7 +29,9 @@ const ShippingPage = ({history}) => {
     <HelmetMeta title='Shipping' />
       <CheckoutProg step1 step2/>
       <ProgressBar variant='danger' animated now={50} />
-      <h1>Shipping</h1>
+      <h1>
+         <strong>Shipping</strong>
+      </h1>
       <Form onSubmit={submitHandler}>
 
         <Form.Group controlId='street'>

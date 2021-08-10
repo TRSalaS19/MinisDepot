@@ -54,8 +54,9 @@ const AdminProductListPage = ({history, match}) => {
     ])
 
   const deleteProductHandler = (id) => {
-    if(window.confirm('Are you sure you want to DELETE this product?'))
-    dispatch(adminProductDelete(id))
+    if(window.confirm('Are you sure you want to DELETE this product?')) {
+      dispatch(adminProductDelete(id))
+    }
   }
 
   const adminCreateProductHandler = () => {
@@ -63,10 +64,12 @@ const AdminProductListPage = ({history, match}) => {
   }
 
   return (
-    <>
+    <div>
       <Row className='align-items-center'>
         <Col>
-          <h1>Products</h1>
+          <h1>
+            <strong>Admin Products List</strong>
+          </h1>
         </Col>
         <Col className='text-right new-product-button'>
           <Button variant='danger' onClick={adminCreateProductHandler}>
@@ -83,7 +86,7 @@ const AdminProductListPage = ({history, match}) => {
       ) : error ? (
         <Alerts>{error}</Alerts>
       ) : (
-        <>
+        <div>
           <HelmetMeta title='Admin Product List' />
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
@@ -103,8 +106,14 @@ const AdminProductListPage = ({history, match}) => {
                   <td>${product.price}</td>
                   <td>{product.brand}</td>
                   <td>
-                    <LinkContainer to={`/aa/product/${product._id}/edit`} className='link-container-icon'>
-                      <Button variant='info' className='btn-sm link-container-icon'>
+                    <LinkContainer 
+                      to={`/aa/product/${product._id}/edit`} 
+                      className='link-container-icon'
+                    >
+                      <Button 
+                        variant='info' 
+                        className='btn-sm link-container-icon'
+                      >
                         <i className='fas fa-edit'></i>
                       </Button>
                     </LinkContainer>
@@ -121,9 +130,9 @@ const AdminProductListPage = ({history, match}) => {
             </tbody>
           </Table>
           <Paginate pages={pages} page={page} isAdmin={true} />
-        </>
+        </div>
       )}
-    </>
+    </div>
   )
 }
 

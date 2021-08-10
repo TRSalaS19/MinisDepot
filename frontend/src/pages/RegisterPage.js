@@ -5,8 +5,8 @@ import { useDispatch, useSelector} from 'react-redux';
 import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { register } from '../actions/userActions';
 import FormFields from '../components/FormFields'
+import { register } from '../actions/userActions';
 
 const RegisterPage = ({location, history}) => {
 
@@ -51,8 +51,9 @@ const RegisterPage = ({location, history}) => {
             <Form.Label className='m-1'>Name</Form.Label>
             <Form.Control 
               type='name' 
-              value={name} onChange={(e) => setName(e.target.value)
-            }></Form.Control>
+              value={name} 
+              onChange={(e) => setName(e.target.value)}
+            ></Form.Control>
           </Form.Group>
 
           <Form.Group controlId='email'>
@@ -60,8 +61,8 @@ const RegisterPage = ({location, history}) => {
             <Form.Control 
               type='email' 
               value={email} 
-              onChange={(e) => setEmail(e.target.value)
-            }></Form.Control>
+              onChange={(e) => setEmail(e.target.value)}
+            ></Form.Control>
           </Form.Group>
 
           <Form.Group controlId='password'>
@@ -69,8 +70,8 @@ const RegisterPage = ({location, history}) => {
             <Form.Control 
               type='password' 
               value={password} 
-              onChange={(e) => setPassword(e.target.value)
-            }></Form.Control>
+              onChange={(e) => setPassword(e.target.value)}
+            ></Form.Control>
           </Form.Group>
 
           <Form.Group controlId='confirmPassword'>
@@ -78,19 +79,22 @@ const RegisterPage = ({location, history}) => {
             <Form.Control 
               type='password' 
               value={confirmPassword} 
-              onChange={(e) => setConfirmPassword(e.target.value)
-            }></Form.Control>
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            ></Form.Control>
           </Form.Group>
 
-          <Button className='my-3'type='submit' variant='primary'>
-            Create Account
+          <Button className='my-3' type='submit' variant='danger'>
+            Create <i className="fas fa-plus-square"></i>
           </Button>
 
         </Form>
 
         <Row className='py-3'>
           <Col>
-            Already have an Account? <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>Login</Link>
+            Already have an Account? 
+            <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+              Login
+            </Link>
           </Col>
         </Row>
 

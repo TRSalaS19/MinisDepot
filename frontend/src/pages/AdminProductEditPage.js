@@ -11,6 +11,7 @@ import { productInfo, adminProductUpdate } from '../actions/productActions';
 import { ADMIN_UPDATE_PRODUCT_RESET } from '../const/productConst';
 
 const AdminProductEditPage = ({match, history}) => {
+  const dispatch = useDispatch();
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -19,8 +20,6 @@ const AdminProductEditPage = ({match, history}) => {
   const [unitsAvailable, setUnitsAvailable] = useState(0);
   const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
-
-  const dispatch = useDispatch();
 
   const productId = match.params.id;
   
@@ -175,7 +174,7 @@ const AdminProductEditPage = ({match, history}) => {
               variant='danger' 
               className='m-3'
             >
-              Update Product
+              Update <i className="fas fa-edit"></i>
             </Button>
 
           </Form>

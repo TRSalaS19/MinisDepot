@@ -23,11 +23,9 @@ import {
   ADMIN_DELETE_USER_FAIL,
   ADMIN_UPDATE_USER_DETAILS_REQUEST,
   ADMIN_UPDATE_USER_DETAILS_SUCCESS,
-  // ADMIN_UPDATE_USER_DETAILS_RESET,
   ADMIN_UPDATE_USER_DETAILS_FAIL
 } from '../const/userConst';
 import {GET_USER_ORDERS_RESET} from '../const/orderConst';
-// import {CART_LIST_RESET} from '../const/cartConst';
 
 export const login = (email, password) => async(dispatch) => {
   try {
@@ -37,11 +35,15 @@ export const login = (email, password) => async(dispatch) => {
 
     const config = {
       headers: {
-        'Content-type': 'application/json'
+        'Content-Type': 'application/json'
       }
     }
 
-    const { data } = await axios.post('/db/users/login', {email, password}, config)
+    const { data } = await axios.post(
+      '/db/users/login', 
+      {email, password}, 
+      config
+    )
 
 
     dispatch({
@@ -64,11 +66,15 @@ export const login = (email, password) => async(dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
+  localStorage.removeItem('cartItems')
+  localStorage.removeItem('shippingAddress')
+  localStorage.removeItem('paymentOption')
+  
   dispatch({ type: LOGOUT})
   dispatch({ type: GET_USER_ORDERS_RESET})
   dispatch({ type: PROFILE_DETAILS_RESET})
   dispatch({ type: ADMIN_USER_LIST_RESET})
-  // dispatch({ type: CART_LIST_RESET})
+
 }
 
 
@@ -80,11 +86,15 @@ export const register = (name, email, password) => async(dispatch) => {
 
     const config = {
       headers: {
-        'Content-type': 'application/json'
+        'Content-Type': 'application/json'
       }
     }
 
-    const { data } = await axios.post('/db/users', {name, email, password}, config)
+    const { data } = await axios.post(
+      '/db/users', 
+      {name, email, password}, 
+      config
+    )
 
 
     dispatch({
@@ -122,7 +132,6 @@ export const getProfileDetails = (id) => async(dispatch, getState) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`
       }
     }
@@ -135,12 +144,16 @@ export const getProfileDetails = (id) => async(dispatch, getState) => {
       payload: data
     })    
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: PROFILE_DETAILS_FAIL,
-      payload: 
-        error.response && error.response.data.message 
-        ? error.response.data.message
-        : error.message
+      payload: message
     })
   }
 }
@@ -165,15 +178,24 @@ export const profileUpdate = (user) => async(dispatch, getState) => {
     dispatch({
       type: PROFILE_UPDATE_SUCCESS,
       payload: data
+    })
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data
     })    
 
+    localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: PROFILE_UPDATE_FAIL,
-      payload: 
-        error.response && error.response.data.message 
-        ? error.response.data.message
-        : error.message
+      payload: message
     })
   }
 }
@@ -200,12 +222,16 @@ export const adminUserList = () => async(dispatch, getState) => {
     })    
 
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: ADMIN_USER_LIST_FAIL,
-      payload: 
-        error.response && error.response.data.message 
-        ? error.response.data.message
-        : error.message
+      payload: message
     })
   }
 }
@@ -231,17 +257,22 @@ export const adminDeleteUser = (id) => async(dispatch, getState) => {
     })    
 
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: ADMIN_DELETE_USER_FAIL,
-      payload: 
-        error.response && error.response.data.message 
-        ? error.response.data.message
-        : error.message
+      payload: message
     })
   }
 }
 
-export const adminUpdateUserDetails = (user) => async(dispatch, getState) => {
+export const adminUpdateUserDetails = (user) => async(
+  dispatch, getState) => {
   try {
     dispatch({
       type: ADMIN_UPDATE_USER_DETAILS_REQUEST
@@ -264,15 +295,22 @@ export const adminUpdateUserDetails = (user) => async(dispatch, getState) => {
     dispatch({
       type: PROFILE_DETAILS_SUCCESS,
       payload: data
+    })
+    dispatch({
+      type: PROFILE_DETAILS_RESET
     }) 
 
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type:  ADMIN_UPDATE_USER_DETAILS_FAIL,
-      payload: 
-        error.response && error.response.data.message 
-        ? error.response.data.message
-        : error.message
+      payload: message
     })
   }
 }

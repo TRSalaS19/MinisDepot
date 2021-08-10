@@ -14,6 +14,8 @@ import HelmetMeta from '../components/HelmetMeta';
 import Alerts from '../components/Alerts';
 import CheckoutProg from '../components/CheckoutProg';
 import {createOrder} from '../actions/orderActions';
+import { CREATE_ORDER_RESET } from '../const/orderConst';
+import { PROFILE_DETAILS_RESET } from '../const/userConst';
 
 const ConfirmOrderPage = ({history}) => {
   const dispatch = useDispatch();
@@ -23,23 +25,47 @@ const ConfirmOrderPage = ({history}) => {
   const orderCreate = useSelector(state => state.orderCreate);
   const {order, success, error} = orderCreate
 
-  useEffect(() => {
-    if(success) {
-      history.push(`/order/${order._id}`)
-    }
-  }, [history, success, order])
+  if(!cart.shippingAddress.street) {
+    history.push('/shipping');
+  } else if (!cart.paymentOption) {
+    history.push('/payment')
+  }
 
   // price Calculations for totals:
+
   // to get the decimal values for prices: 
   const decimalAdd = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
 
-  cart.itemsPrice = decimalAdd(cart.cartItems.reduce((acc, item) => acc + item.price * item.itemQty, 0))
-  cart.shippingPrice = decimalAdd(cart.itemsPrice > 50 ? 0 : 15)
-  cart.taxPrice = decimalAdd(Number((0.15 * cart.itemsPrice).toFixed(2)))
-  cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
+  cart.itemsPrice = decimalAdd(
+    cart.cartItems.reduce(
+      (acc, item) => acc + item.price * item.itemQty, 0
+    )
+  )
+  cart.shippingPrice = decimalAdd(
+    cart.itemsPrice > 50 ? 0 : 15
+  )
+  cart.taxPrice = decimalAdd(
+    Number((0.15 * cart.itemsPrice).toFixed(2))
+  )
+  cart.totalPrice = 
+    (Number(cart.itemsPrice) +
+     Number(cart.shippingPrice) + 
+     Number(cart.taxPrice)
+    ).toFixed(2)
 
+  useEffect(() => {
+    if(success) {
+      history.push(`/order/${order._id}`)
+      dispatch({
+        type: PROFILE_DETAILS_RESET
+      })
+      dispatch({
+        type: CREATE_ORDER_RESET
+      })
+    }
+  }, [dispatch, history, success, order])
 
   const confirmOrderHandler = () => {
     dispatch(createOrder({
@@ -54,7 +80,7 @@ const ConfirmOrderPage = ({history}) => {
   }
 
   return (
-    <>
+    <div>
       <HelmetMeta title='Confirm Order' />
       <CheckoutProg step1 step2 step3 step4 />
       <ProgressBar variant='danger' animated now={100} />
@@ -64,16 +90,17 @@ const ConfirmOrderPage = ({history}) => {
             <ListGroup.Item>
               <h2><strong>Shipping Address: </strong></h2>
               <p>
-                {/* <strong>Address: </strong> */}
                 {cart.shippingAddress.street}
                 {cart.shippingAddress.city} , {cart.shippingAddress.countryState} {cart.shippingAddress.zipCode}   
                 , {cart.shippingAddress.country}
               </p>
             </ListGroup.Item>
+
             <ListGroup.Item>
               <h2><strong>Payment Option: </strong></h2>
               {cart.paymentOption}
             </ListGroup.Item>
+
             <ListGroup.Item>
               <h2>Cart Items</h2>
               {cart.cartItems.length === 0 ? (
@@ -84,12 +111,23 @@ const ConfirmOrderPage = ({history}) => {
                       <ListGroup.Item key={index}>
                         <Row>
                           <Col md={2}>
-                            <Link className='text-decoration-none' to={`/product/${item.product}`}>
-                              <Image src={item.image} alt={item.name} fluid rounded />
+                            <Link 
+                              className='text-decoration-none' 
+                              to={`/product/${item.product}`}
+                            >
+                              <Image 
+                                src={item.image} 
+                                alt={item.name} 
+                                fluid 
+                                rounded 
+                              />
                             </Link>
                           </Col>
                           <Col>
-                            <Link className='text-decoration-none' to={`/product/${item.product}`}>
+                            <Link 
+                              className='text-decoration-none' 
+                              to={`/product/${item.product}`}
+                            >
                               {item.name}
                             </Link>
                           </Col>
@@ -143,13 +181,15 @@ const ConfirmOrderPage = ({history}) => {
                   className='btn-block confirm-order-button fluid' 
                   disabled={cart.cartItems === 0} 
                   onClick={confirmOrderHandler} 
-                >Complete Order</Button>
+                >
+                  Complete Order
+                </Button>
               </ListGroup.Item>
             </ListGroup>
           </Card>
         </Col>
       </Row>
-    </>
+    </div>
   )
 }
 

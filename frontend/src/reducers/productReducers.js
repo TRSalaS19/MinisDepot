@@ -25,7 +25,8 @@ import {
   TOP_RATED_PRODUCTS_REQUEST,
 } from '../const/productConst';
 
-export const productsListReducer = (state = { products: []}, action) => {
+export const productsListReducer = (
+  state = { products: []}, action) => {
   switch(action.type){
     case PRODUCT_LIST_REQUEST:
       return { loading: true, products: []}
@@ -43,10 +44,11 @@ export const productsListReducer = (state = { products: []}, action) => {
   }
 }
 
-export const productInfoReducer = (state = { product: {reviews: []} }, action) => {
+export const productInfoReducer = (
+  state = { product: {reviews: []} }, action) => {
   switch(action.type) {
     case PRODUCT_INFO_REQUEST: 
-      return { loading: true, ...state}
+      return {...state,loading: true}
     case PRODUCT_INFO_SUCCESS: 
       return {loading: false, product: action.payload}
     case PRODUCT_INFO_FAIL: 
@@ -114,7 +116,8 @@ export const adminCreateNewProductReducer = (state = {}, action) => {
   }
 }
 
-export const adminUpdateProductReducer = (state = {product: {}}, action) => {
+export const adminUpdateProductReducer = (
+  state = {product: {}}, action) => {
   switch (action.type) {
     case ADMIN_UPDATE_PRODUCT_REQUEST:
       return {loading: true}

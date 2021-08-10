@@ -56,8 +56,8 @@ const PaymentPage = ({history}) => {
           </Col>
         </Form.Group>
         
-        <Button type='submit' variant='primary' className='my-3'>
-          Continue
+        <Button type='submit' variant='danger' className='my-3'>
+          Continue <i className="fas fa-angle-double-right"></i>
         </Button>
 
       </Form>

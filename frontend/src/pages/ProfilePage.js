@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Form, Button, Row, Col, Table} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import HelmetMeta from '../components/HelmetMeta';
@@ -7,7 +8,7 @@ import Alerts from '../components/Alerts';
 import LoadingSpinner from '../components/LoadingSpinner';
 import {getProfileDetails, profileUpdate} from '../actions/userActions';
 import {getUserOrdersList} from '../actions/orderActions';
-import { LinkContainer } from 'react-router-bootstrap';
+import { PROFILE_UPDATE_RESET } from '../const/userConst';
 
 
 const ProfilePage = ({location, history}) => {
@@ -35,7 +36,10 @@ const ProfilePage = ({location, history}) => {
     if(!userInfo) {
       history.push('/login')
     } else {
-      if(!user.name) {
+      if(!user || !user.name || success) {
+        dispatch({
+          type: PROFILE_UPDATE_RESET
+        })
         dispatch(getProfileDetails('profile'))
         dispatch(getUserOrdersList())
       } else {
@@ -43,7 +47,16 @@ const ProfilePage = ({location, history}) => {
         setEmail(user.email)
       }
     }
-  }, [dispatch, history, userInfo, user, profileDetails,orders])
+  }, [
+      dispatch, 
+      history, 
+      userInfo, 
+      user, 
+      profileDetails,
+      orders, 
+      success
+    ]
+  )
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -56,9 +69,8 @@ const ProfilePage = ({location, history}) => {
 
 return (
   <div>
-
     <Link 
-      to='/aa/productlist' 
+      to='/profilepage' 
       className='btn bg-danger my-3'
     >
       <i className="fas fa-hand-point-left"></i> Return
@@ -68,51 +80,56 @@ return (
         <h2>Your Profile Details</h2>
         {message && <Alerts variant='danger'>{message}</Alerts>}
         {success && <Alerts variant='info'>Profile Updated</Alerts>}
-        {error && <Alerts>{error}</Alerts>}
-        {loading && <LoadingSpinner/>}
-        <HelmetMeta title='User Profile' />
-        <Form onSubmit={submitHandler}>
+        {loading ? (
+          <LoadingSpinner />
+          ) : error ? (
+          <Alerts>{error}</Alerts>
+          ) : (
+            <Form onSubmit={submitHandler}>
+            <HelmetMeta title='User Profile' />
 
-          <Form.Group controlId='name'>
-            <Form.Label className='m-1'>Name</Form.Label>
-            <Form.Control 
-              type='name' 
-              value={name} onChange={(e) => setName(e.target.value)
-            }></Form.Control>
-          </Form.Group>
+              <Form.Group controlId='name'>
+                <Form.Label className='m-1'>Name</Form.Label>
+                <Form.Control 
+                  type='name' 
+                  value={name} onChange={(e) => setName(e.target.value)
+                }></Form.Control>
+              </Form.Group>
 
-          <Form.Group controlId='email'>
-            <Form.Label className='m-1'>Email</Form.Label>
-            <Form.Control 
-              type='email' 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)
-            }></Form.Control>
-          </Form.Group>
+              <Form.Group controlId='email'>
+                <Form.Label className='m-1'>Email</Form.Label>
+                <Form.Control 
+                  type='email' 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)
+                }></Form.Control>
+              </Form.Group>
 
-          <Form.Group controlId='password'>
-            <Form.Label className='m-1'>Password</Form.Label>
-            <Form.Control 
-              type='password' 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)
-            }></Form.Control>
-          </Form.Group>
+              <Form.Group controlId='password'>
+                <Form.Label className='m-1'>Password</Form.Label>
+                <Form.Control 
+                  type='password' 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)
+                }></Form.Control>
+              </Form.Group>
 
-          <Form.Group controlId='confirmPassword'>
-            <Form.Label className='m-1'>Confirm Password</Form.Label>
-            <Form.Control 
-              type='password' 
-              value={confirmPassword} 
-              onChange={(e) => setConfirmPassword(e.target.value)
-            }></Form.Control>
-          </Form.Group>
+              <Form.Group controlId='confirmPassword'>
+                <Form.Label className='m-1'>Confirm Password</Form.Label>
+                <Form.Control 
+                  type='password' 
+                  value={confirmPassword} 
+                  onChange={(e) => setConfirmPassword(e.target.value)
+                }></Form.Control>
+              </Form.Group>
 
-          <Button className='my-3'type='submit' variant='danger'>
-            Update Profile
-          </Button>
+              <Button className='my-3'type='submit' variant='danger'>
+                Update Profile
+              </Button>
 
-        </Form>
+            </Form>
+          )
+        }
 
       </Col>
       <Col md={9} >

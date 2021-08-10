@@ -101,7 +101,7 @@ const userRegister = asyncHandler(async(req, res) => {
       password
     })
 
-    if(user) {
+      if(user) {
       res.status(201).json({
         _id: user._id,
         name: user.name,

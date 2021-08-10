@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { CART_LIST_ITEMS_RESET } from '../const/cartConst';
 import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
@@ -14,7 +15,9 @@ import {
   GET_USER_ORDERS_FAIL,
   ADMIN_ALL_ORDERS_LIST_REQUEST,
   ADMIN_ALL_ORDERS_LIST_SUCCESS,
+  ADMIN_ALL_ORDERS_LIST_FAIL,
 } from '../const/orderConst';
+import {logout} from './userActions';
 
 export const createOrder = (order) => async(dispatch, getState) => {
   try {
@@ -37,12 +40,22 @@ export const createOrder = (order) => async(dispatch, getState) => {
       type: CREATE_ORDER_SUCCESS,
       payload: data
     })
+    dispatch({
+      type: CART_LIST_ITEMS_RESET,
+      payload: data
+    })
+    localStorage.removeItem('cartItems')
   } catch (error) {
+    const message = 
+      error.response && error.response.data.message ?
+        error.response.data.message :
+        error.message
+      if(message === 'You are not authorized to view this page'){
+        dispatch(logout());
+      }
     dispatch({
       type: CREATE_ORDER_FAIL,
-      payload: error.response && error.response.data.message 
-      ? error.response.data.message
-      : error.message
+      payload: message
     })
   }
 }
@@ -68,16 +81,23 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       payload: data
     })
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: GET_ORDER_DETAILS_FAIL,
-      payload: error.response && error.response.data.message
-      ? error.message.data.message 
-      : error.message
+      payload: message,
     })
   }
 }
 
-export const orderPayment = (orderId, paymentResult) => async (dispatch, getState) => {
+export const orderPayment = (orderId, paymentResult) => async (
+  dispatch, getState
+  ) => {
   try {
     dispatch({
       type: ORDER_PAID_UPDATE_REQUEST
@@ -99,16 +119,21 @@ export const orderPayment = (orderId, paymentResult) => async (dispatch, getStat
       payload: data
     })
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: ORDER_PAID_UPDATE_FAIL,
-      payload: error.response && error.response.data.message
-      ? error.message.data.message 
-      : error.message
+      payload: message,
     })
   }
 }
 
-export const getUserOrdersList = (orderId, paymentResult) => async (dispatch, getState) => {
+export const getUserOrdersList = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: GET_USER_ORDERS_REQUEST
@@ -129,16 +154,21 @@ export const getUserOrdersList = (orderId, paymentResult) => async (dispatch, ge
       payload: data
     })
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
     dispatch({
       type: GET_USER_ORDERS_FAIL,
-      payload: error.response && error.response.data.message
-      ? error.message.data.message 
-      : error.message
+      payload: message,
     })
   }
 }
 
-export const adminOrdersList = () => async(dispatch, getState) => {
+export const adminListOfOrders = () => async(dispatch, getState) => {
   try {
     dispatch({
       type: ADMIN_ALL_ORDERS_LIST_REQUEST
@@ -159,11 +189,16 @@ export const adminOrdersList = () => async(dispatch, getState) => {
       payload: data
     })
   } catch (error) {
-    dispatch({
-      type: GET_USER_ORDERS_FAIL,
-      payload: error.response && error.response.data.message
-      ? error.message.data.message 
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
       : error.message
+    if (message === 'You are not authorized to view this page') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: ADMIN_ALL_ORDERS_LIST_FAIL,
+      payload: message,
     })
   }
-}
+};

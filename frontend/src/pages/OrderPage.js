@@ -3,7 +3,6 @@ import axios from 'axios';
 import {PayPalButton} from 'react-paypal-button-v2';
 import { Link } from 'react-router-dom';
 import { 
-  // Button, 
   Row, 
   Col, 
   ListGroup, 
@@ -17,7 +16,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import {getOrderDetails, orderPayment} from '../actions/orderActions';
 import { ORDER_PAID_UPDATE_RESET } from '../const/orderConst';
 
-const OrderPage = ({match}) => {
+const OrderPage = ({match, history}) => {
   const orderId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false);
@@ -27,18 +26,28 @@ const OrderPage = ({match}) => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const {order, loading, error} = orderDetails
 
+  const userDetails = useSelector((state) => state.login);
+  const {userInfo} = userDetails;
+
   const orderPaymentDetails = useSelector((state) => state.orderPaid);
   const {success: successPay, loading: paymentLoading} = orderPaymentDetails
   
-  // gets the itemsprice so we can display it. 
+  // gets the itemsprice so we can display it as decimal amounts
   if (!loading) {
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2)
     }
-    order.itemsPrice = addDecimals(order.orderItems.reduce((acc, item) => acc + item.price * item.itemQty, 0))
+    order.itemsPrice = addDecimals(
+      order.orderItems.reduce(
+        (acc, item) => acc + item.price * item.itemQty, 0
+      )
+    )
   }
 
   useEffect(() => {
+    if(!userInfo) {
+      history.push('/login')
+    }
     // adding paypal script:
     const addPayPalScript = async () => {
       const { data: clientId} = await axios.get('/db/config/paypal')
@@ -54,8 +63,10 @@ const OrderPage = ({match}) => {
     
     // checks to see if the there is no order or if the order_id does not match orderId then we want it to get the details for that order:
 
-    if(!order || successPay) {
-      dispatch({type: ORDER_PAID_UPDATE_RESET})
+    if(!order || successPay || order._id !== orderId) {
+      dispatch({
+        type: ORDER_PAID_UPDATE_RESET
+      })
       dispatch(getOrderDetails(orderId))
     } else if (!order.isPaid) {
       if(!window.paypal){
@@ -64,10 +75,9 @@ const OrderPage = ({match}) => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, orderId, order, successPay])
+  }, [dispatch, orderId, order, successPay, userInfo, history])
 
   const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
     dispatch(orderPayment(orderId, paymentResult))
   }
 
@@ -76,7 +86,7 @@ const OrderPage = ({match}) => {
       ) : error ? (
       <Alerts>{error}</Alerts>
       ) : (
-      <>
+      <div>
           <HelmetMeta title='Order Page' />
           <h1>Order {order._id}</h1>
             <Row>
@@ -102,7 +112,7 @@ const OrderPage = ({match}) => {
                   <ListGroup.Item>
                     <h2>Payment Option: </h2>
                     <p>
-                      <strong>Preferred Option: </strong>
+                      <strong>Paid With: </strong>
                       {order.paymentOption}
                     </p>
                     {order.isPaid ? (
@@ -200,7 +210,7 @@ const OrderPage = ({match}) => {
                 </Card>
               </Col>
             </Row>
-        </>
+        </div>
       )
 }
 

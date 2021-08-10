@@ -47,12 +47,14 @@ const AdminUserEditPage = ({match, history}) => {
   }
 
   return (
-    <>
+    <div>
       <Link to='/aa/userlist' className='btn btn-danger my-3'>
       <i className="fas fa-hand-point-left"></i> Return
       </Link>
       <FormFields>
-          <h1>Edit User Details</h1>
+          <h1>
+            <strong>Edit User Details</strong>
+          </h1>
           {updateLoading && <LoadingSpinner />}
           {updateError && <Alerts>{error}</Alerts>}
           {loading ? (
@@ -88,14 +90,14 @@ const AdminUserEditPage = ({match, history}) => {
                 }></Form.Check>
               </Form.Group>
 
-              <Button className='my-2'type='submit' variant='primary'>
-                Update User Account
+              <Button className='my-2'type='submit' variant='danger'>
+                Update Account
               </Button>
 
             </Form>
           )}
       </FormFields>
-    </>
+    </div>
   )
 }
 

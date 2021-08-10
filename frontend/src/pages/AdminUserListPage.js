@@ -34,8 +34,10 @@ const UserListPage = ({history}) => {
   }
 
   return (
-    <>
-      <h1>USER LIST</h1>
+    <div>
+      <h1>
+        <strong>USER LIST</strong>
+      </h1>
       {loading ? (
         <LoadingSpinner />
         ) : error ? (
@@ -78,7 +80,7 @@ const UserListPage = ({history}) => {
                     className='btn-sm' 
                     onClick={() => deleteUserHandler(user._id)}
                     >
-                    <i className="fas fa-user-minus"></i>
+                      <i className="fas fa-user-minus"></i>
                     </Button>
                 </td>
               </tr>
@@ -86,7 +88,7 @@ const UserListPage = ({history}) => {
           </tbody>
         </Table>
       )}
-    </>
+    </div>
   )
 }
 
