@@ -4,22 +4,22 @@ A simple eCom site for small dog clothes.
 
 libraries used : 
 
-bcryptjs
-dotenv
-express
-express async handler
-jsonwebtoken
-mongoose
-multer
-react-bootstrap
-react-dom
-react-helmet
-react-paypal-button-v2
-react-redux
-react-router-bootstrap
-react-router-dom
-redux-thunk
-redux-devtools-extension
+-bcryptjs
+-dotenv
+-express
+-express async handler
+-jsonwebtoken
+-mongoose
+-multer
+-react-bootstrap
+-react-dom
+-react-helmet
+-react-paypal-button-v2
+-react-redux
+-react-router-bootstrap
+-react-router-dom
+-redux-thunk
+-redux-devtools-extension
 
 Features: 
 user login/registration(authentication, authorization, admin access, protected pages) as well as hashing and salting password with bcryptjs
